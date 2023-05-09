@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "App_Themes/Dark/style.css",
+    "inputFile": "App_Themes/Dark/style.scss"
+  },
+  {
+    "outputFile": "App_Themes/Dark/colors.css",
+    "inputFile": "App_Themes/Dark/colors.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/sign.css",
+    "inputFile": "wwwroot/css/sign.scss"
+  }
+]
