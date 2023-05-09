@@ -18,11 +18,11 @@ namespace Webstop
       if (Request.Url.AbsolutePath.StartsWith("/Pages/"))
         HttpContext.Current.Response.Redirect(Request.Url.OriginalString.Replace(Request.Url.AbsolutePath, "/Error?code=404"));
     }
-    
+
     protected void Page_Error(object sender, EventArgs e)
     {
       Exception lastError = Server.GetLastError();
-      HttpContext.Current.Response.Redirect(Request.Url.OriginalString.Replace(Request.Url.AbsolutePath, "/Error?code=404?message=" + lastError.Message));
+      HttpContext.Current.Response.Redirect(Request.Url.OriginalString.Replace(Request.Url.AbsolutePath, "/Error?code=404"));
       Response.Write(lastError.Message);
     }
 
@@ -34,8 +34,7 @@ namespace Webstop
     protected void Application_Error(object sender, EventArgs e)
     {
       Exception lastError = Server.GetLastError();
-      HttpContext.Current.Response.Redirect(Request.Url.OriginalString.Replace(Request.Url.AbsolutePath, "/Error?code=404?message=" + lastError.Message));
-      Response.Write(lastError.Message);
+      HttpContext.Current.Response.Redirect(Request.Url.OriginalString.Replace(Request.Url.AbsolutePath, "/Error?code=401"));
     }
 
     protected void Session_Start(object sender, EventArgs e)

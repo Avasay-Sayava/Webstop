@@ -304,6 +304,7 @@
     <Content Include="Pages\_Dashboard\_Student\Events.aspx" />
     <Content Include="Pages\_Dashboard\_Student\Grades.aspx" />
     <Content Include="Pages\_Dashboard\_Student\Homework.aspx" />
+    <Content Include="Scripts\Sign.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -317,7 +318,7 @@
     <Content Include="wwwroot\css\sign.min.css">
       <DependentUpon>sign.css</DependentUpon>
     </Content>
-    <Content Include="wwwroot\js\Index.js" />
+    <Content Include="wwwroot\js\Tools.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Browsers\" />

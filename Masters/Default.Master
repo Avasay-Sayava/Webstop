@@ -11,5 +11,6 @@
 <body>
   <asp:ContentPlaceHolder ID="Content" runat="server">
   </asp:ContentPlaceHolder>
+  <script src="wwwroot/js/Tools.js"></script>
 </body>
 </html>

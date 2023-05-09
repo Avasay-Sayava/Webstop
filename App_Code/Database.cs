@@ -5,7 +5,7 @@ namespace Webstop
 {
   internal class Database
   {
-    public static SqlConnection GetConnection(string connStr) => new SqlConnection(connStr);
+    public static SqlConnection GetConnection(string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True") => new SqlConnection(connStr);
 
     public static void DoQuery(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
     {
@@ -37,6 +37,17 @@ namespace Webstop
         table = null;
       }
       return table;
+    }
+    
+    public static bool IsExist(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
+    {
+      SqlConnection conn = GetConnection(connStr);
+      conn.Open();
+      SqlCommand com = new SqlCommand(sql, conn);
+      SqlDataReader reader = com.ExecuteReader();
+      bool flag = reader.Read();
+      conn.Close();
+      return flag;
     }
 
     public static int RowsAffected(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")

@@ -58,11 +58,11 @@ class Cookies {
 class Sign {
   static check = class {
     static name = (name) => {
-      return /^(?:[A-Z][a-z]+ )+[A-Z][a-z]+$|^(?:[\u05D0-\u05EA]{2,} )+[\u05D0-\u05EA]{2,}$/.test(name);
+      return /^(?:[A-Z][a-z]+ )+[A-Z][a-z]+$/.test(name);
     }
 
     static password = (pwd) => {
-      return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/.test(pwd);
+      return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*.,_-]).{8,}$/.test(pwd);
     }
 
     static email = (email) => {

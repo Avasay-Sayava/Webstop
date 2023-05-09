@@ -11,7 +11,13 @@ namespace Webstop.Pages
   {
     protected void Page_Load(object sender, EventArgs e)
     {
+      if (Request.Form["up-submit"] != null)
+      {
+        if (Request.Form["up-email"] == null || !Database.IsExist("select * from Users where Email='" + Request.Form["up-email"] + "'"))
+        {
 
+        }
+      }
     }
   }
 }
