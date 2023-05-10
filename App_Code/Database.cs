@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Webstop
@@ -17,25 +18,26 @@ namespace Webstop
       conn.Close();
     }
 
-    public static string[,] Get(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
+    public static ArrayList Get(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
     {
-      string[,] table;
-      try
+      /*string[,] table;
+      DataTable dt = ExecuteDataTable(sql, connStr);
+      table = new string[dt.Rows.Count,dt.Columns.Count];
+      for (int i = 0; i < dt.Rows.Count; i++)
       {
-        DataTable dt = ExecuteDataTable(connStr, sql);
-        table = new string[dt.Rows.Count,dt.Columns.Count];
-        for (int i = 0; i < dt.Rows.Count; i++)
+        for (int j = 0; j < dt.Columns.Count; j++)
         {
-          for (int j = 0; j < dt.Columns.Count; j++)
-          {
-            table[i,j] = dt.Rows[i][j].ToString();
-          }
+          table[i, j] = dt.Rows[i][j].ToString();
         }
       }
-      catch (System.Exception)
-      {
-        table = null;
-      }
+      table = null;
+      return table;*/
+      DataTable dt = ExecuteDataTable(sql, connStr);
+      ArrayList table = null;
+      if (IsExist(sql, connStr)) table = new ArrayList();
+      else return table;
+      for (int i = 0; i < dt.Rows.Count; i++)
+        table[i] = dt.Rows[i].ItemArray.Clone();
       return table;
     }
     
@@ -81,7 +83,7 @@ namespace Webstop
 
     public static string PrintDataTable(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
     {
-      DataTable dt = ExecuteDataTable(connStr, sql);
+      DataTable dt = ExecuteDataTable(sql, connStr);
       string printStr = "<table>";
       foreach (DataRow row in dt.Rows)
       {
