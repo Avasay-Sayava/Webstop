@@ -62,7 +62,7 @@ class Sign {
     }
 
     static password = (pwd) => {
-      return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*.,_-]).{8,}$/.test(pwd);
+      return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*.,_-]).{8,16}$/.test(pwd);
     }
 
     static email = (email) => {

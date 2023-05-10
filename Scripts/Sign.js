@@ -30,14 +30,10 @@ signInButton.addEventListener('click', () => {
 
 signIn.form.addEventListener("submit", e => {
 	if (!Sign.check.email(signIn.email.value)) {
-    console.log("email");
 		signIn.submit.labels[0].style.position = "relative";
 		signIn.submit.labels[0].style.visibility = "visible";
 		e.preventDefault();
-	}
-
-	if (!Sign.check.password(signIn.password.value)) {
-    console.log("pwd");
+	} else if (!Sign.check.password(signIn.password.value)) {
 		signIn.submit.labels[0].style.position = "relative";
 		signIn.submit.labels[0].style.visibility = "visible";
 		e.preventDefault();
@@ -46,7 +42,6 @@ signIn.form.addEventListener("submit", e => {
 
 signUp.form.addEventListener("submit", e => {
 	if (!Sign.check.name(signUp.name.value)) {
-    console.log("name");
 		signUp.name.labels[0].style.position = "relative";
 		signUp.name.labels[0].style.visibility = "visible";
 		e.preventDefault();
@@ -55,8 +50,8 @@ signUp.form.addEventListener("submit", e => {
 		signUp.name.labels[0].style.visibility = "hidden";
 	}
 
-	if (!Sign.check.email(signUp.email.value)) {
-    console.log("email");
+	if (!Sign.check.email(signUp.email.value) && signUp.email.value != "") {
+    console.log(signUp.email.value);
 		signUp.email.labels[0].style.position = "relative";
 		signUp.email.labels[0].style.visibility = "visible";
 		e.preventDefault();
@@ -66,7 +61,6 @@ signUp.form.addEventListener("submit", e => {
 	}
 
 	if (!Sign.check.password(signUp.password.value)) {
-    console.log("password");
 		signUp.password.labels[0].style.position = "relative";
 		signUp.password.labels[0].style.visibility = "visible";
 		e.preventDefault();
@@ -76,7 +70,6 @@ signUp.form.addEventListener("submit", e => {
 	}
 
 	if (signUp.confirm.value != signUp.password.value) {
-		console.log("confirm");
 		signUp.confirm.labels[0].style.position = "relative";
 		signUp.confirm.labels[0].style.visibility = "visible";
 		e.preventDefault();

@@ -18,6 +18,7 @@
         <label for="up-name">Invalid names. your names must start with uppercase letter and must contain more than 1 letter.</label>
         <input name="up-email" id="up-email" type="text" placeholder="Email" />
         <label for="up-email">Invalid email.</label>
+        <asp:label id="exist" runat="server" for="up-email" ForeColor="Red">Email exists.</asp:label>
         <input name="up-password" id="up-password" type="password" placeholder="Password" />
         <label for="up-password">Invalid password. your password must contain at least eight characters, one number, lower and uppercase letter, and special character.</label>
         <input name="up-password-confirm" id="up-password-confirm" type="password" placeholder="Confirm Password" />
@@ -34,7 +35,7 @@
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span>or use your account</span>
-        <label for="in-submit">Invalid email or password</label>
+        <asp:label runat="server" id="error" for="in-submit">Invalid email or password</asp:label>
         <input name="in-email" id="in-email" type="text" placeholder="Email" />
         <input name="in-password" id="in-password" type="password" placeholder="Password" />
         <input name="in-submit" id="in-submit" class="button" value="Sign In" type="submit" />

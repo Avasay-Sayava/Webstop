@@ -131,29 +131,29 @@ input:not(.button):focus {
 .container.right-panel-active .overlay-right {
   transform: translateX(20%);
 }
-@media screen and (min-height: 1124px) and (min-width: 1124px) {
+@media screen and (min-height: 1124px) and (min-width: 1124px) and (orientation: landscape) {
   .container {
     min-height: 700px;
     min-width: 1050px;
   }
 }
-@media screen and (max-height: 1124px) and (min-width: 1124px) {
+@media screen and (max-height: 1124px) and (min-width: 1124px) and (orientation: landscape) {
   .container {
     min-height: 480px;
   }
 }
-@media screen and (max-height: 860px) and (min-width: 800px) {
+@media screen and (max-height: 860px) and (min-width: 800px) and (orientation: landscape) {
   .container {
     transform: none;
   }
 }
-@media screen and (max-height: 512px) and (min-width: 512px) {
+@media screen and (max-height: 512px) and (min-width: 512px) and (orientation: landscape) {
   .container {
     max-width: 90%;
     min-height: 90%;
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (orientation: portrait) {
   .container {
     max-width: 90%;
     min-height: 90%;
@@ -328,6 +328,14 @@ input:not(.button):focus {
 label {
   visibility: hidden;
   position: absolute;
+  color: red;
+  font-size: 10px;
+  text-align: start;
+  align-self: start;
+}
+
+#Content_exist,
+#Content_error {
   color: red;
   font-size: 10px;
   text-align: start;

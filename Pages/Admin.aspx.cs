@@ -5,13 +5,14 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Webstop.Pages._Dashboard._Student
+namespace Webstop.Pages
 {
-  public partial class Events : System.Web.UI.Page
+  public partial class Admin : System.Web.UI.Page
   {
+    public string table;
     protected void Page_Load(object sender, EventArgs e)
     {
-
+      table = Database.GetDataTable("select * from Users");
     }
   }
 }

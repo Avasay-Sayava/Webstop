@@ -11,7 +11,19 @@ namespace Webstop.Pages
   {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+      exist.Visible = false;
+      error.Visible = false;
+      if (Request.Form["in-submit"] != null)
+      {
+        if (Database.IsExist("select * from Users where Email='" + Request.Form["in-email"] + "' and Password='" + Request.Form["in-password"] + "'"))
+        {
+          Response.Redirect("Home");
+        }
+        else
+        {
+          error.Visible = true;
+        }
+      }
     }
   }
 }

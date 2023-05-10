@@ -11,11 +11,18 @@ namespace Webstop.Pages
   {
     protected void Page_Load(object sender, EventArgs e)
     {
+      error.Visible = false;
+      exist.Visible = false;
       if (Request.Form["up-submit"] != null)
       {
-        if (Request.Form["up-email"] == null || !Database.IsExist("select * from Users where Email='" + Request.Form["up-email"] + "'"))
+        if (!Database.IsExist("select * from Users where Email='" + Request.Form["up-email"] + "'"))
         {
-
+          Database.DoQuery("insert into Users (Name, Email, Password) values ('" + Request.Form["up-name"] + "', '" + Request.Form["up-email"] + "', '" + Request.Form["password"] + "')");
+          Response.Redirect("Home");
+        }
+        else
+        {
+          exist.Visible = true;
         }
       }
     }

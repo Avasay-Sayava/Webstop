@@ -132,13 +132,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Masters\Dashboard.master.cs">
-      <DependentUpon>Dashboard.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Masters\Dashboard.master.designer.cs">
-      <DependentUpon>Dashboard.master</DependentUpon>
-    </Compile>
     <Compile Include="Masters\Default.Master.cs">
       <DependentUpon>Default.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -146,19 +139,12 @@
     <Compile Include="Masters\Default.Master.designer.cs">
       <DependentUpon>Default.Master</DependentUpon>
     </Compile>
-    <Compile Include="Masters\Student.master.cs">
-      <DependentUpon>Student.master</DependentUpon>
+    <Compile Include="Pages\Admin.aspx.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Masters\Student.master.designer.cs">
-      <DependentUpon>Student.master</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Dashboard.aspx.cs">
-      <DependentUpon>Dashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\Dashboard.aspx.designer.cs">
-      <DependentUpon>Dashboard.aspx</DependentUpon>
+    <Compile Include="Pages\Admin.aspx.designer.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
@@ -209,62 +195,6 @@
     <Compile Include="Pages\Signup.aspx.designer.cs">
       <DependentUpon>Signup.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\_Dashboard\Lessons.aspx.cs">
-      <DependentUpon>Lessons.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\Lessons.aspx.designer.cs">
-      <DependentUpon>Lessons.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\Messages.aspx.cs">
-      <DependentUpon>Messages.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\Messages.aspx.designer.cs">
-      <DependentUpon>Messages.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\Phones.aspx.cs">
-      <DependentUpon>Phones.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\Phones.aspx.designer.cs">
-      <DependentUpon>Phones.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\Student.aspx.cs">
-      <DependentUpon>Student.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\Student.aspx.designer.cs">
-      <DependentUpon>Student.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\Timetable.aspx.cs">
-      <DependentUpon>Timetable.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\Timetable.aspx.designer.cs">
-      <DependentUpon>Timetable.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\_Student\Events.aspx.cs">
-      <DependentUpon>Events.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\_Student\Events.aspx.designer.cs">
-      <DependentUpon>Events.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\_Student\Grades.aspx.cs">
-      <DependentUpon>Grades.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\_Student\Grades.aspx.designer.cs">
-      <DependentUpon>Grades.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\_Student\Homework.aspx.cs">
-      <DependentUpon>Homework.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\_Dashboard\_Student\Homework.aspx.designer.cs">
-      <DependentUpon>Homework.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -288,7 +218,7 @@
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Pages\Dashboard.aspx" />
+    <Content Include="Pages\Admin.aspx" />
     <Content Include="Pages\Error.aspx" />
     <Content Include="Pages\Help.aspx" />
     <Content Include="Pages\Home.aspx" />
@@ -296,14 +226,6 @@
     <Content Include="Pages\Sign.aspx" />
     <Content Include="Pages\Signin.aspx" />
     <Content Include="Pages\Signup.aspx" />
-    <Content Include="Pages\_Dashboard\Lessons.aspx" />
-    <Content Include="Pages\_Dashboard\Messages.aspx" />
-    <Content Include="Pages\_Dashboard\Phones.aspx" />
-    <Content Include="Pages\_Dashboard\Student.aspx" />
-    <Content Include="Pages\_Dashboard\Timetable.aspx" />
-    <Content Include="Pages\_Dashboard\_Student\Events.aspx" />
-    <Content Include="Pages\_Dashboard\_Student\Grades.aspx" />
-    <Content Include="Pages\_Dashboard\_Student\Homework.aspx" />
     <Content Include="Scripts\Sign.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -332,8 +254,6 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Masters\Default.Master" />
-    <Content Include="Masters\Dashboard.master" />
-    <Content Include="Masters\Student.master" />
     <None Include="packages.config" />
     <Content Include="wwwroot\css\sign.scss" />
     <Content Include="README.md" />

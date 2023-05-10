@@ -13,5 +13,23 @@ namespace Webstop.Pages
 
   public partial class Signup
   {
+
+    /// <summary>
+    /// exist control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Label exist;
+
+    /// <summary>
+    /// error control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Label error;
   }
 }
