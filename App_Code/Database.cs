@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.CodeDom;
+using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -18,7 +20,7 @@ namespace Webstop
       conn.Close();
     }
 
-    public static ArrayList Get(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
+    public static object[,] Get(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
     {
       /*string[,] table;
       DataTable dt = ExecuteDataTable(sql, connStr);
@@ -33,11 +35,12 @@ namespace Webstop
       table = null;
       return table;*/
       DataTable dt = ExecuteDataTable(sql, connStr);
-      ArrayList table = null;
-      if (IsExist(sql, connStr)) table = new ArrayList();
+      object[,] table = null;
+      if (IsExist(sql, connStr)) table = new object[dt.Rows.Count, dt.Columns.Count];
       else return table;
       for (int i = 0; i < dt.Rows.Count; i++)
-        table[i] = dt.Rows[i].ItemArray.Clone();
+        for (int j = 0; j < dt.Columns.Count; j++)
+          table[i, j] = dt.Rows[i].ItemArray[j];
       return table;
     }
 
@@ -84,7 +87,7 @@ namespace Webstop
     public static string GetDataTable(string sql, string table, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
     {
       DataTable dt = ExecuteDataTable(sql, connStr);
-      string printStr = "<table>";
+      string printStr = @"<table class='st_table'>";
       foreach (DataRow row in dt.Rows)
       {
         printStr += @"
