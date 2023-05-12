@@ -14,17 +14,17 @@ namespace Webstop.Pages
     {
       if (!Database.IsExist("select * from Users where Id='" + Session["signin"] + "' and Type=255"))
         Response.Redirect("Error?code=404");
-      if (Request.Form["Users-add"] != null)
+      if (Request.Form["add"] != null)
       {
-
+        Database.DoQuery(@"insert into Users (name, email, password, type) values ('" + Request.Form["name"] + @"', '" + Request.Form["email"] + @"', '" + Request.Form["password"] + @"', '" + Request.Form["type"] + @"')");
       }
-      else if (Request.Form["Users-update"] != null)
+      else if (Request.Form["update"] != null)
       {
-
+        Database.DoQuery(@"update Users set name='" + Request.Form["name"] + @"', email='" + Request.Form["email"] + @"', password='" + Request.Form["password"] + @"', type='" + Request.Form["type"] + @"' where id='" + Request.Form["id"] + @"'");
       }
-      else if (Request.Form["Users-remove"] != null)
+      else if (Request.Form["remove"] != null)
       {
-
+        Database.DoQuery(@"delete from Users where id='" + Request.Form["id"] + @"'");
       }
       Users = Database.GetDataTable("select * from Users", "Users");
     }

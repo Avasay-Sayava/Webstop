@@ -17,7 +17,7 @@ namespace Webstop.Pages
       {
         if (!Database.IsExist("select * from Users where Email='" + Request.Form["up-email"] + "'"))
         {
-          Database.DoQuery("insert into Users (Name, Email, Password) values ('" + Request.Form["up-name"] + "', '" + Request.Form["up-email"] + "', '" + Request.Form["password"] + "')");
+          Database.DoQuery("insert into Users (Name, Email, Password) values ('" + Request.Form["up-name"] + "', '" + Request.Form["up-email"] + "', '" + Request.Form["up-password"] + "')");
           Response.Redirect("Home");
         }
         else

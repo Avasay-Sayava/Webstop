@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Exchange.WebServices.Data;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,7 +13,7 @@ namespace Webstop.Pages
   {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+      Exception ex = Server.GetLastError();
     }
   }
 }

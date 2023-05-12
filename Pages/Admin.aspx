@@ -14,7 +14,7 @@
     }
 
     body {
-      background-color: rgb(220,220,220);
+      background-color: white;
       font-family: sans-serif;
       padding: 5vh;
       width: 100vw;
@@ -32,7 +32,11 @@
       overflow: scroll;
     }
 
-    .st_table tr:nth-child(even) {
+    tr {
+      background-color: rgba(0,0,0, .2);
+    }
+    
+    tr:nth-child(even) {
       background-color: rgba(0,0,0, .1);
     }
 
@@ -41,7 +45,7 @@
     }
 
     .sticky {
-      background-color: dodgerblue;
+        background: linear-gradient(to right, #2b5dff, #2bb8ff);
       display: flex;
       flex-direction: row;
       top: 0;

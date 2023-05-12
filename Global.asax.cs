@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Microsoft.Exchange.WebServices.Data;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -7,12 +11,6 @@ namespace Webstop
 {
   public class MvcApplication : HttpApplication
   {
-    protected void Page_Error(object sender, EventArgs e)
-    {
-/*      Exception lastError = Server.GetLastError();
-      HttpContext.Current.Response.Redirect("/Error?code=404");*/
-    }
-
     protected void Application_Start(object sender, EventArgs e)
     {
       AreaRegistration.RegisterAllAreas();
@@ -26,8 +24,7 @@ namespace Webstop
 
     protected void Application_Error(object sender, EventArgs e)
     {
-/*      Exception lastError = Server.GetLastError();
-      HttpContext.Current.Response.Redirect("/Error?code=403");*/
+      Response.Redirect(@"Error");
     }
 
     protected void Session_Start(object sender, EventArgs e)
