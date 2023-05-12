@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,7 +18,8 @@ namespace Webstop.Pages
       {
         if (Database.IsExist("select * from Users where Email='" + Request.Form["in-email"] + "' and Password='" + Request.Form["in-password"] + "'"))
         {
-          Response.Redirect("Home");
+          Session["signin"] = (int) Database.Get("select Id from Users where Email='" + Request.Form["in-email"] + "' and Password='" + Request.Form["in-password"] + "'")[0,0];
+          Response.Redirect(Database.IsExist("select * from Users where Id='" + Session["signin"] + "' and Type=255") ? "Admin" : "Home");
         }
         else
         {

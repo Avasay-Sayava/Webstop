@@ -7,17 +7,6 @@ namespace Webstop
 {
   public class MvcApplication : HttpApplication
   {
-    protected void Page_Start()
-    {
-      if (Request.Url.AbsolutePath.StartsWith("/Pages/"))
-        HttpContext.Current.Response.Redirect("/Error?code=404");
-    }
-    
-    protected void Page_End(object sender, EventArgs e)
-    {
-      // Code that runs on page end
-    }
-
     protected void Page_Error(object sender, EventArgs e)
     {
 /*      Exception lastError = Server.GetLastError();

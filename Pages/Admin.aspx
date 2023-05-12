@@ -6,97 +6,84 @@
 <head runat="server">
   <title></title>
   <style>
-    *{
+    * {
       margin: 0;
       padding: 0;
+      border-spacing: 0;
       box-sizing: border-box;
     }
 
-    body{
-      background-color: rgb(63,72,83);
+    body {
+      background-color: rgb(220,220,220);
       font-family: sans-serif;
-      color: rgb(220,220,220);
-      padding: 50px;
+      padding: 5vh;
       width: 100vw;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
-    .st_viewport{
-      max-height: 500px;
-      overflow: auto;
+    #container {
+      border-radius: 10px;
+      position: absolute;
+      top: 5vh;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: fit-content;
+      max-height: 90vh;
+      overflow: scroll;
     }
 
-    pre{
-      overflow: auto;
+    .st_table tr:nth-child(even) {
+      background-color: rgba(0,0,0, .1);
     }
 
-    .st_viewport{
-      background-color: rgb(62,148,236);
-      color: rgb(27,30,36);
-      margin: 20px 0;
-    }
-
-    .st_table_header{
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0px;
-      z-index: 1;
-      background-color: rgb(27,30,36);
-      color: rgb(220,220,220);
-    }
-    .st_table_header h2{
-      font-weight: 400;
-      margin: 0 20px;
-      padding: 20px 0 0;
-    }
-    .st_table_header .st_row{
-      color: rgba(220,220,220, .7);
-    }
-    .st_table_header .st_column{
-  
-    }
-
-    .st_table{
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-      -webkit-flex-direction: column;
-          -ms-flex-direction: column;
-              flex-direction: column;
-    }
-
-    .st_row{
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      margin: 0;
-    }
-    .st_table .st_row:nth-child(even){
-      background-color: rgba(0,0,0, .1)
-    }
-
-    .st_column{
+    td {
       padding: 10px 20px;
+    }
+
+    .sticky {
+      background-color: dodgerblue;
+      display: flex;
+      flex-direction: row;
+      top: 0;
+      position: sticky;
+    }
+
+    .sticky div {
+      padding: 10px 20px;
+      width: 140px;
+    }
+    
+    .sticky div:nth-child(5) {
+      padding: 10px 20px;
+      width: 190px;
+    }
+
+    input[type=text] {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      width: 100px;
+    }
+
+    input[type=submit] {
+      padding: 5px;
+      margin: 5px;
     }
   </style>
 </head>
 <body>
-  <table class="st_warp_table">
-    <header class="st_table_header">
-      <h2>Users</h2>
-      <div class="st_row">
-        <div class="st_column">Id</div>
-        <div class="st_column">Name</div>
-        <div class="st_column">Password</div>
-        <div class="st_column">Email</div>
-        <div class="st_column">Type</div>
-      </div>
-    </header>
-  </table>
-  <%= table %>
+  <div id="container">
+    <div class="sticky">
+      <div>Id</div>
+      <div>Name</div>
+      <div>Email</div>
+      <div>Password</div>
+      <div>Type</div>
+      <div>Actions</div>
+    </div>
+    <%= Users %>
+  </div>
 </body>
 </html>
