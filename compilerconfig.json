@@ -10,5 +10,17 @@
   {
     "outputFile": "wwwroot/css/sign.css",
     "inputFile": "wwwroot/css/sign.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/admin.css",
+    "inputFile": "wwwroot/css/admin.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/error.css",
+    "inputFile": "wwwroot/css/error.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/default.css",
+    "inputFile": "wwwroot/css/default.scss"
   }
 ]

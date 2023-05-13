@@ -1,71 +1,94 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 
-namespace Webstop
+namespace SQL
 {
-  internal class Database
+  /// <summary>
+  /// Represents a class for interacting with a SQL Server SQL.Manager.
+  /// </summary>
+  internal class Manager
   {
-    public static SqlConnection GetConnection(string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True") => new SqlConnection(connStr);
+    /// <summary>
+    /// The default connection string for the SQL.Manager.
+    /// </summary>
+    private const string defaultConnStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True";
 
-    public static void DoQuery(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
+    /// <summary>
+    /// Gets a new instance of SqlConnection using the provided or default connection string.
+    /// </summary>
+    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
+    /// <returns>A new SqlConnection instance.</returns>
+    public static SqlConnection GetConnection(string connStr = defaultConnStr) => new SqlConnection(connStr);
+
+    /// <summary>
+    /// Executes a query SQL statement on the SQL.Manager using the provided or default connection string.
+    /// </summary>
+    /// <param name="sql">The SQL statement to execute.</param>
+    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
+    /// <returns>The number of rows affected by the SQL statement.</returns>
+    public static int DoQuery(string sql, string connStr = defaultConnStr)
     {
       SqlConnection conn = GetConnection(connStr);
       conn.Open();
       SqlCommand com = new SqlCommand(sql, conn);
-      com.ExecuteNonQuery();
+      int rowsAffected = com.ExecuteNonQuery();
       com.Dispose();
       conn.Close();
+      return rowsAffected;
     }
 
-    public static object[,] Get(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
+    /// <summary>
+    /// Executes a SQL query on the SQL.Manager and returns the result as a two-dimensional object array.
+    /// </summary>
+    /// <param name="sql">The SQL query to execute.</param>
+    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
+    /// <returns>A two-dimensional object array containing the result of the SQL query.</returns>
+    public static object[,] ExecuteQuery(string sql, string connStr = defaultConnStr)
     {
-      /*string[,] table;
-      DataTable dt = ExecuteDataTable(sql, connStr);
-      table = new string[dt.Rows.Count,dt.Columns.Count];
-      for (int i = 0; i < dt.Rows.Count; i++)
-      {
-        for (int j = 0; j < dt.Columns.Count; j++)
-        {
-          table[i, j] = dt.Rows[i][j].ToString();
-        }
-      }
-      table = null;
-      return table;*/
       DataTable dt = ExecuteDataTable(sql, connStr);
       object[,] table = null;
-      if (IsExist(sql, connStr)) table = new object[dt.Rows.Count, dt.Columns.Count];
-      else return table;
-      for (int i = 0; i < dt.Rows.Count; i++)
-        for (int j = 0; j < dt.Columns.Count; j++)
-          table[i, j] = dt.Rows[i].ItemArray[j];
+      if (DoesExist(sql, connStr))
+      {
+        table = new object[dt.Rows.Count, dt.Columns.Count];
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+          for (int j = 0; j < dt.Columns.Count; j++)
+          {
+            table[i, j] = dt.Rows[i].ItemArray[j];
+          }
+        }
+      }
+      else
+      {
+        return table;
+      }
       return table;
     }
 
-    public static bool IsExist(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
+    /// <summary>
+    /// Checks if a record exists in the SQL.Manager based on the provided SQL query.
+    /// </summary>
+    /// <param name="sql">The SQL query to check for existence.</param>
+    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
+    /// <returns>True if the record exists, False otherwise.</returns>
+    public static bool DoesExist(string sql, string connStr = defaultConnStr)
     {
       SqlConnection conn = GetConnection(connStr);
       conn.Open();
       SqlCommand com = new SqlCommand(sql, conn);
       SqlDataReader reader = com.ExecuteReader();
-      bool flag = reader.Read();
+      bool recordExists = reader.Read();
       conn.Close();
-      return flag;
+      return recordExists;
     }
 
-    public static int RowsAffected(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
-    {
-      SqlConnection conn = GetConnection(connStr);
-      conn.Open();
-      SqlCommand com = new SqlCommand(sql, conn);
-      int rowsA = com.ExecuteNonQuery();
-      conn.Close();
-      return rowsA;
-    }
-
-    public static DataTable ExecuteDataTable(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
+    /// <summary>
+    /// Executes a SQL statement and returns the result as a DataTable object.
+    /// </summary>
+    /// <param name="sql">The SQL statement to execute.</param>
+    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
+    /// <returns>A DataTable object containing the result of the SQL statement.</returns>
+    public static DataTable ExecuteDataTable(string sql, string connStr = defaultConnStr)
     {
       SqlConnection conn = GetConnection(connStr);
       conn.Open();
@@ -75,45 +98,99 @@ namespace Webstop
       return dt;
     }
 
-    public static void ExecuteNonQuery(string sql, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
+    /// <summary>
+    /// Executes a non-query SQL statement and returns the number of rows affected.
+    /// </summary>
+    /// <param name="sql">The SQL statement to execute.</param>
+    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
+    /// <returns>The number of rows affected by the SQL statement.</returns>
+    public static int ExecuteNonQuery(string sql, string connStr = defaultConnStr)
     {
       SqlConnection conn = GetConnection(connStr);
       conn.Open();
-      SqlCommand command = new SqlCommand(sql, conn);
-      command.ExecuteNonQuery();
+      SqlCommand com = new SqlCommand(sql, conn);
+      int rowsAffected = com.ExecuteNonQuery();
       conn.Close();
+      return rowsAffected;
     }
 
-    public static string GetDataTable(string sql, string table, string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
+    /// <summary>
+    /// Generates an HTML table with form elements for displaying and manipulating data from the SQL.Manager.
+    /// </summary>
+    /// <param name="sql">The SQL query to retrieve data from the SQL.Manager.</param>
+    /// <param name="action">The action URL for the form.</param>
+    /// <param name="addons">Additional attributes for the form elements (optional).</param>
+    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
+    /// <returns>An HTML string representing the generated table with form elements.</returns>
+    public static string ExecuteTableForm(string sql, string action, string[] addons = null, string connStr = defaultConnStr)
     {
       DataTable dt = ExecuteDataTable(sql, connStr);
-      string printStr = @"<table class='st_table'>";
+      if (addons == null)
+      {
+        addons = new string[dt.Columns.Count];
+        for (int i = 0; i < addons.Length; i++)
+        {
+          addons[i] = "";
+        }
+      }
+      if (addons.Length != dt.Columns.Count)
+      {
+        string[] tmp = addons;
+        addons = new string[dt.Columns.Count];
+        for (int i = 0; i < addons.Length; i++)
+        {
+          addons[i] = "";
+        }
+        tmp.CopyTo(addons, 0);
+      }
+      string html = $@"
+<table>
+  <tr>
+    <form>";
+      for (int i = 0; i < dt.Columns.Count; i++)
+      {
+        html += $@"
+      <td>
+        <input {addons[i].Replace("readonly", "").Replace("disabled", "")} placeHolder='{dt.Columns[i].ColumnName}' id='search-{i}' type='text' name='{dt.Columns[i].ColumnName}' />
+      </td>";
+      }
+      html += @"
+      <td>
+        <input type='button' name='search' value='search' onclick='search()' />
+      </td>
+    </form>
+  </tr>";
       foreach (DataRow row in dt.Rows)
       {
-        printStr += @"
+        html += $@"
   <tr>
-    <form method='post' action='Admin'>
-      <td><input readonly type='text' name='id' value='" + row.ItemArray[0] + @"' /></td>
-      <td><input type='text' name='name' value='" + row.ItemArray[1] + @"' /></td>
-      <td><input type='text' name='email' value='" + row.ItemArray[2] + @"' /></td>
-      <td><input type='text' name='password' value='" + row.ItemArray[3] + @"' /></td>
-      <td><input type='number' name='type' value='" + row.ItemArray[4] + @"' min='0' max='255' /></td>
+    <form method='post' action='{action}'>";
+        for (int i = 0; i < dt.Columns.Count; i++)
+        {
+          html += $@"
       <td>
-        <input type='submit' name='update' value='update' />
+        <input {addons[i]} placeHolder='{dt.Columns[i].ColumnName}' type='text' name='{dt.Columns[i].ColumnName.ToLower()}' value='{row.ItemArray[i]}' />
+      </td>";
+        }
+        html += @"
+      <td>
+        <input type='submit' name='apply' value='apply' />
         <input type='submit' name='remove' value='remove' />
       </td>
     </form>
   </tr>";
       }
-      return printStr += @"
+      html += $@"
   <tr>
-    <form method='post' action='Admin'>
-      <td><input readonly type='text' name='id' value='" + ((int) dt.Rows[dt.Rows.Count - 1].ItemArray[0] + 1) + @"' /></td>
-      <td><input type='text' name='name' /></td>
-      <td><input type='text' name='email' /></td>
-      <td><input type='text' name='password' /></td>
-      <td><input type='number' name='type' value='0' min='0' max='255' /></td>
+    <form method='post' action='{action}'>";
+      for (int i = 0; i < dt.Columns.Count; i++)
+      {
+        html += $@"
       <td>
+        <input {addons[i]} placeHolder='{dt.Columns[i].ColumnName}' type='text' name='{dt.Columns[i].ColumnName.ToLower()}' value='{(dt.Columns[i].ColumnName.ToLower().Equals("id") ? $"{(int)dt.Rows[dt.Rows.Count - 1].ItemArray[i] + 1}" : "")}' />
+      </td>";
+      }
+      return html += @"<td>
         <input type='submit' name='add' value='add' />
       </td>
     </form>

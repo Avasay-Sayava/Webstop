@@ -9,29 +9,68 @@ using System.Web.Routing;
 
 namespace Webstop
 {
+  /// <summary>
+  /// Represents the main application class for the MVC application.
+  /// </summary>
   public class MvcApplication : HttpApplication
   {
+    /// <summary>
+    /// Handles the event raised when an unhandled exception occurs on a page.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
+    protected void Page_Error(object sender, EventArgs e)
+    {
+      /* HttpContext.Current.Response.Redirect(@"Error?err=" + Server.GetLastError().StackTrace); */
+    }
+
+    /// <summary>
+    /// Handles the application start event.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
     protected void Application_Start(object sender, EventArgs e)
     {
       AreaRegistration.RegisterAllAreas();
       RouteConfig.RegisterRoutes(RouteTable.Routes);
     }
 
+    /// <summary>
+    /// Handles the application end event.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
     protected void Application_End(object sender, EventArgs e)
     {
       // Code that runs on application shutdown
     }
 
+    /// <summary>
+    /// Handles the application error event.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
     protected void Application_Error(object sender, EventArgs e)
     {
-      Response.Redirect(@"Error");
+      /* Session["Error"] = Server.GetLastError().Message;
+      HttpContext.Current.Response.Redirect(@"Error"); */
     }
 
+    /// <summary>
+    /// Handles the session start event.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
     protected void Session_Start(object sender, EventArgs e)
     {
       // Code that runs when a new session is started
     }
 
+    /// <summary>
+    /// Handles the session end event.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
     protected void Session_End(object sender, EventArgs e)
     {
       // Code that runs when a session ends. 

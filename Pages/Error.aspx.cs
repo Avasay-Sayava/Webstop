@@ -1,11 +1,4 @@
-﻿using Microsoft.Exchange.WebServices.Data;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using System;
 
 namespace Webstop.Pages
 {
@@ -13,7 +6,10 @@ namespace Webstop.Pages
   {
     protected void Page_Load(object sender, EventArgs e)
     {
-      Exception ex = Server.GetLastError();
+      string code = Request.QueryString["code"];
+      Response.Write("<p>" + code +"</p>");
+      Response.Write("<p>" + Session["Error"] + "</p>");
+      
     }
   }
 }

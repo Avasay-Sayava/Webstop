@@ -1,0 +1,9 @@
+﻿p {
+  margin: 0;
+}
+p:first-child {
+  font-size: 40vmin;
+}
+p:nth-child(2) {
+  font-size: 10vmin;
+}

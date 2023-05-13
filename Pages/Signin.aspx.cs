@@ -1,28 +1,36 @@
-﻿using Microsoft.Ajax.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using System;
 
 namespace Webstop.Pages
 {
+  /// <summary>
+  /// Represents the signin page of the website.
+  /// </summary>
   public partial class Signin : System.Web.UI.Page
   {
+    /// <summary>
+    /// Event handler for the page load event.
+    /// </summary>
     protected void Page_Load(object sender, EventArgs e)
     {
+      // Hide the exist and error elements initially
       exist.Visible = false;
       error.Visible = false;
+
+      // Check if the form was submitted
       if (Request.Form["in-submit"] != null)
       {
-        if (Database.IsExist("select * from Users where Email='" + Request.Form["in-email"] + "' and Password='" + Request.Form["in-password"] + "'"))
+        // Check if the user exists in the database
+        if (SQL.Manager.DoesExist($"select * from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'"))
         {
-          Session["signin"] = (int) Database.Get("select Id from Users where Email='" + Request.Form["in-email"] + "' and Password='" + Request.Form["in-password"] + "'")[0,0];
-          Response.Redirect(Database.IsExist("select * from Users where Id='" + Session["signin"] + "' and Type=255") ? "Admin" : "Home");
+          // Set the session variable for signed-in user
+          Session["Signin"] = (int)SQL.Manager.ExecuteQuery($"select Id from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'")[0, 0];
+
+          // Redirect to the appropriate page based on user type
+          Response.Redirect(SQL.Manager.DoesExist($"select * from Users where Id='{Session["Signin"]}' and Type=255") ? "Admin" : "Home");
         }
         else
         {
+          // Show the error message
           error.Visible = true;
         }
       }

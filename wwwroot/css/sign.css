@@ -1,20 +1,4 @@
-﻿* {
-  box-sizing: border-box;
-}
-
-body {
-  background: #f6f5f7;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-family: "Montserrat", sans-serif;
-  height: 100vh;
-  margin: 0;
-  overflow: hidden;
-}
-
-h1 {
+﻿h1 {
   font-weight: bold;
   margin: 0;
 }
@@ -42,12 +26,8 @@ a {
   margin: 15px 0;
 }
 
-.button {
+.button, button {
   margin: 10px;
-}
-
-button,
-.button {
   border-radius: 20px;
   border: 1px solid #2b5dff;
   background-color: #2b5dff;
@@ -59,16 +39,13 @@ button,
   text-transform: uppercase;
   transition: transform 80ms ease-in;
 }
-button:active,
-.button:active {
+.button:active, button:active {
   transform: scale(0.95);
 }
-button:focus,
-.button:focus {
+.button:focus, button:focus {
   outline: none;
 }
-button.ghost,
-.button.ghost {
+.button.ghost, button.ghost {
   background-color: transparent;
   border-color: #FFFFFF;
 }

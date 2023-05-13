@@ -187,6 +187,13 @@
     <Compile Include="Pages\Signin.aspx.designer.cs">
       <DependentUpon>Signin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Signout.aspx.cs">
+      <DependentUpon>Signout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Signout.aspx.designer.cs">
+      <DependentUpon>Signout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Signup.aspx.cs">
       <DependentUpon>Signup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -223,7 +230,9 @@
     <Content Include="Pages\Home.aspx" />
     <Content Include="Pages\Index.aspx" />
     <Content Include="Pages\Signin.aspx" />
+    <Content Include="Pages\Signout.aspx" />
     <Content Include="Pages\Signup.aspx" />
+    <Content Include="Scripts\Admin.js" />
     <Content Include="Scripts\Sign.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -231,6 +240,24 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="wwwroot\css\admin.css">
+      <DependentUpon>admin.scss</DependentUpon>
+    </Content>
+    <Content Include="wwwroot\css\admin.min.css">
+      <DependentUpon>admin.css</DependentUpon>
+    </Content>
+    <Content Include="wwwroot\css\default.css">
+      <DependentUpon>default.scss</DependentUpon>
+    </Content>
+    <Content Include="wwwroot\css\default.min.css">
+      <DependentUpon>default.css</DependentUpon>
+    </Content>
+    <Content Include="wwwroot\css\error.css">
+      <DependentUpon>error.scss</DependentUpon>
+    </Content>
+    <Content Include="wwwroot\css\error.min.css">
+      <DependentUpon>error.css</DependentUpon>
     </Content>
     <Content Include="wwwroot\css\sign.css">
       <DependentUpon>sign.scss</DependentUpon>
@@ -255,6 +282,9 @@
     <None Include="packages.config" />
     <Content Include="wwwroot\css\sign.scss" />
     <Content Include="README.md" />
+    <Content Include="wwwroot\css\admin.scss" />
+    <Content Include="wwwroot\css\error.scss" />
+    <Content Include="wwwroot\css\default.scss" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\he-HE.resx">
@@ -287,6 +317,8 @@
           <DevelopmentServerPort>64537</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44333/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>https://localhost:44333/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

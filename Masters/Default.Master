@@ -4,13 +4,23 @@
 
 <html>
 <head runat="server">
-    <title><%= Page.Title %></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+  <title><%= Page.Title %></title>
+  <link href="/wwwroot/css/default.css" rel="stylesheet" />
+  <script defer="defer" src="wwwroot/js/Tools.js"></script>
+  <asp:ContentPlaceHolder ID="head" runat="server">
+  </asp:ContentPlaceHolder>
 </head>
 <body>
-  <asp:ContentPlaceHolder ID="Content" runat="server">
-  </asp:ContentPlaceHolder>
-  <script src="wwwroot/js/Tools.js"></script>
+  <header>
+    <%= SignBtn %>
+    <button onclick="location.href='Help'"></button>
+    <button onclick="location.href=''"></button>
+    <button onclick="location.href='Home'"></button>
+    <%= AdminBtn %>
+  </header>
+  <content>
+    <asp:ContentPlaceHolder ID="Content" runat="server">
+    </asp:ContentPlaceHolder>
+  </content>
 </body>
 </html>
