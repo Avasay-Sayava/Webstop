@@ -6,7 +6,7 @@
 }
 
 body {
-  background: #f6f5f7;
+  background: linear-gradient(to right, white, whitesmoke);
   display: flex;
   font-family: "Montserrat", sans-serif;
   flex-direction: column;
@@ -24,7 +24,7 @@ content {
   width: 100vw;
 }
 
-header {
+ul {
   height: 60px;
   position: relative;
   display: flex;
@@ -34,7 +34,7 @@ header {
   width: 100vw;
   background: linear-gradient(to left, white, whitesmoke);
 }
-header button {
+ul li {
   margin: 10px;
   border-radius: 20px;
   border: 1px solid #2b5dff;
@@ -47,9 +47,16 @@ header button {
   text-transform: uppercase;
   transition: transform 80ms ease-in;
 }
-header button:active {
+ul li a {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  color: white;
+  text-decoration: none;
+}
+ul li a:active {
   transform: scale(0.95);
 }
-header button:focus {
+ul li a:focus {
   outline: none;
 }

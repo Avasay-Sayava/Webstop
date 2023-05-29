@@ -249,7 +249,6 @@ input:not(.button):focus {
 }
 
 .overlay {
-  background: #2b5dff;
   background: linear-gradient(to right, #2b5dff, #2bb8ff);
   background-repeat: no-repeat;
   background-size: cover;

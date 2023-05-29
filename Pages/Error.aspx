@@ -3,4 +3,6 @@
   <link href="wwwroot/css/error.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ContentPlaceHolderID="Content" runat="server">
+  <p><%= code %></p>
+  <p><%= msg %></p>
 </asp:Content>

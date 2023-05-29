@@ -10,7 +10,7 @@ namespace Webstop.Pages
     /// <summary>
     /// The string representing the users.
     /// </summary>
-    public string Users;
+    public string Users { get; private set; }
 
     /// <summary>
     /// Event handler for the Page_Load event.
@@ -44,7 +44,7 @@ namespace Webstop.Pages
       }
 
       // Retrieve the users from the database and generate the table form
-      Users = SQL.Manager.ExecuteTableForm("select * from Users", "Admin", new string[] { "readonly", "", "", "", "type='number' min='0' max='255'" });
+      Users = SQL.Manager.ExecuteTableForm("select * from Users", "Admin", new string[] { "readonly", string.Empty, string.Empty, string.Empty, "type='number' min='0' max='255'" });
     }
   }
 }
