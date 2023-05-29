@@ -23,11 +23,11 @@ namespace Webstop.Pages
         if (!SQL.Manager.DoesExist($"select * from Users where Email='{Request.Form["up-email"]}'"))
         {
           // Add a new user to the database
-          SQL.Manager.DoQuery($"insert into Users (Name, Email, Password) values ('{Request.Form["up-name"]}', '{Request.Form["up-email"]}', '{Request.Form["up-password"]}')");
+          SQL.Manager.DoQuery(SQL.Syntax.Insert("Users", new string[] {"Name", "Password", "Email", "Join" }, new object[] { Request.Form["up-name"], Request.Form["up-password"], Request.Form["up-email"], DateTime.Now }));
           Response.Redirect("Home");
 
           // Set the session variable for signed-in user
-          Session["Signin"] = SQL.Manager.ExecuteQuery($"select * from Users where email='{Request.Form["up-email"]}'")[0, 0];
+          Session["Signin"] = SQL.Manager.ExecuteDataTable($"select * from Users where email='{Request.Form["up-email"]}'").Rows[0][0];
         }
         else
         {

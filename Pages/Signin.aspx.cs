@@ -23,7 +23,7 @@ namespace Webstop.Pages
         if (SQL.Manager.DoesExist($"select * from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'"))
         {
           // Set the session variable for signed-in user
-          Session["Signin"] = (int)SQL.Manager.ExecuteQuery($"select Id from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'")[0, 0];
+          Session["Signin"] = (int)SQL.Manager.ExecuteDataTable($"select Id from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'").Rows[0][0];
 
           // Redirect to the appropriate page based on user type
           Response.Redirect(SQL.Manager.DoesExist($"select * from Users where Id='{Session["Signin"]}' and Type=255") ? "Admin" : "Home");

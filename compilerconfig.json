@@ -22,5 +22,9 @@
   {
     "outputFile": "wwwroot/css/default.css",
     "inputFile": "wwwroot/css/default.scss"
+  },
+  {
+    "outputFile": "TTT/TTT.css",
+    "inputFile": "TTT/TTT.scss"
   }
 ]

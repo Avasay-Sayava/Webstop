@@ -10,7 +10,7 @@ namespace Webstop.Pages
     /// <summary>
     /// The string representing the users.
     /// </summary>
-    public string Users;
+    public string Users { get; private set; }
 
     /// <summary>
     /// Event handler for the Page_Load event.
@@ -30,12 +30,12 @@ namespace Webstop.Pages
       if (Request.Form["add"] != null)
       {
         // Insert a new user into the database
-        SQL.Manager.DoQuery($@"insert into Users (name, email, password, type) values ('{Request.Form["name"]}', '{Request.Form["email"]}', '{Request.Form["password"]}', '{Request.Form["type"]}')");
+        SQL.Manager.DoQuery($@"insert into Users (name, email, password, join, type) values ('{Request.Form["name"]}', '{Request.Form["email"]}', '{Request.Form["password"]}', '{Request.Form["join"]}', '{Request.Form["type"]}')");
       }
       else if (Request.Form["apply"] != null)
       {
         // Update an existing user in the database
-        SQL.Manager.DoQuery($@"update Users set name='{Request.Form["name"]}', email='{Request.Form["email"]}', password='{Request.Form["password"]}', type='{Request.Form["type"]}' where id='{Request.Form["id"]}'");
+        SQL.Manager.DoQuery($@"update Users set name='{Request.Form["name"]}', email='{Request.Form["email"]}', password='{Request.Form["password"]}', join='{Request.Form["join"]}', type='{Request.Form["type"]}' where id='{Request.Form["id"]}'");
       }
       else if (Request.Form["remove"] != null)
       {
@@ -44,7 +44,7 @@ namespace Webstop.Pages
       }
 
       // Retrieve the users from the database and generate the table form
-      Users = SQL.Manager.ExecuteTableForm("select * from Users", "Admin", new string[] { "readonly", "", "", "", "type='number' min='0' max='255'" });
+      Users = SQL.Manager.ExecuteTableForm("select * from Users", "Admin", new string[] { "readonly", string.Empty, string.Empty, string.Empty, "type='number' min='0' max='255'" });
     }
   }
 }

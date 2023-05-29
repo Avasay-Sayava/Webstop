@@ -1,0 +1,25 @@
+@mixin size($h, $w) {
+    height: $h;
+    width: $w;
+}
+
+body {
+  @include size(100vh, 100vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: cadetblue;
+  margin: 0;
+}
+
+table {
+  border: none;
+  box-sizing: content-box;
+    tr {
+        td {
+            @include size(20vmin, 20vmin);
+            background-color: floralwhite;
+            border: 10px cadetblue solid;
+        }
+    }
+}

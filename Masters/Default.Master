@@ -11,13 +11,14 @@
   </asp:ContentPlaceHolder>
 </head>
 <body>
-  <header>
-    <%= SignBtn %>
-    <button onclick="location.href='Help'"></button>
-    <button onclick="location.href=''"></button>
-    <button onclick="location.href='Home'"></button>
+  <ul>
     <%= AdminBtn %>
-  </header>
+    <li><a></a></li>
+    <li><a></a></li>
+    <li><a></a></li>
+    <li><a></a></li>
+    <%= SignBtn %>
+  </ul>
   <content>
     <asp:ContentPlaceHolder ID="Content" runat="server">
     </asp:ContentPlaceHolder>

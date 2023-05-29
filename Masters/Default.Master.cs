@@ -36,16 +36,20 @@ namespace Webstop.Masters
       Page.Title += " - Webstop";
 
       // Generate the Sign button HTML markup based on the Signin session variable
-      // If Signin session variable is null or 0, display "Sign In" button, otherwise display "Sign Out" button
+      // If Signin session variable is null or 0, display "Sign In / Sign Up" switch, otherwise display "Sign Out" button
       SignBtn = $@"
-      <button onclick=""location.pathname='/Sign{((Session["Signin"] == null || (int)Session["Signin"] == 0) ? "in" : "out")}'"">
-        Sign {((Session["Signin"] == null || (int)Session["Signin"] == 0) ? "In" : "Out")}
-      </button>";
+<ul>
+  {((Session["Signin"] as int? ?? 0) == 0
+    ? @"<li><a href='Signin'>Sign In</a></li>
+        <li><a href='Signup'>Sign Up</a></li>"
+    : @"<li><a href='Signout'>Sign Out</a></li>")}
+</ul>";
 
       // Generate the Admin button HTML markup based on the user's type
       // If the user's type is 255, display "Admin" button, otherwise hide the button
-      AdminBtn = $"{SQL.Manager.ExecuteQuery($"select Type from Users where Id='{Session["Signin"] ?? 0}'")[0, 0]}".Equals("255")
-        ? $@"<button onclick=""location.pathname='/Admin'"">Admin</button>"
+      AdminBtn = $"{SQL.Manager.ExecuteDataTable($"select Type from Users where Id='{Session["Signin"] ?? 0}'").Rows[0][0]}";
+      AdminBtn = $"{SQL.Manager.ExecuteDataTable(SQL.Syntax.Select("Users", new string[]{"Type"})).Rows[0][0]}".Equals("255")
+        ? $@"<a onclick=""location.pathname='/Admin'"">Admin</a>"
         : "";
     }
   }

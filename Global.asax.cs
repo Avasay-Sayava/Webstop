@@ -21,7 +21,8 @@ namespace Webstop
     /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
     protected void Page_Error(object sender, EventArgs e)
     {
-      /* HttpContext.Current.Response.Redirect(@"Error?err=" + Server.GetLastError().StackTrace); */
+      Exception lastEx = Server.GetLastError().InnerException ?? Server.GetLastError();
+      HttpContext.Current.Response.Redirect($"Error?code={(lastEx as HttpException).ErrorCode}&msg={lastEx.Message}");
     }
 
     /// <summary>
@@ -52,8 +53,8 @@ namespace Webstop
     /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
     protected void Application_Error(object sender, EventArgs e)
     {
-      /* Session["Error"] = Server.GetLastError().Message;
-      HttpContext.Current.Response.Redirect(@"Error"); */
+      Exception lastEx = Server.GetLastError().InnerException ?? Server.GetLastError();
+      HttpContext.Current.Response.Redirect($"Error?code={(lastEx as HttpException).ErrorCode}&msg={lastEx.Message}");
     }
 
     /// <summary>

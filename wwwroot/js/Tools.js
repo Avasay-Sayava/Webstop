@@ -99,46 +99,48 @@ class Sign {
   static check = class {
     /**
      * Check if a name is valid.
+     * @automata {finite} https://embed.ihateregex.io/make/JTVFKCUzRiUzQSU1QkEtWiU1RCU1QmEteiU1RCUyQiUyMCklMkIlNUJBLVolNUQlNUJhLXolNUQlMkIlMjQ
      * @param {string} name - The name to check.
      * @returns {boolean} - True if the name is valid, false otherwise.
      */
     static name(name) {
-      return /^(?:[A-Z][a-z]+ )+[A-Z][a-z]+$/.test(name);
+      return /^(?:[A-Z][a-z]+ )+[A-Z][a-z]+$/
+        .test(name);
     }
 
     /**
      * Check if a password is valid.
+     * @automata {finite} https://embed.ihateregex.io/make/JTVFKCUzRiUzRC4qJTNGJTVCQS1aJTVEKSglM0YlM0QuKiUzRiU1QmEteiU1RCkoJTNGJTNELiolM0YlNUIwLTklNUQpKCUzRiUzRC4qJTNGJTVCJTIzJTNGISU0MCUyNCUyNSU1RSUyNiouJTJDXy0lNUQpLiU3QjglMkMxNiU3RCUyNA
      * @param {string} pwd - The password to check.
      * @returns {boolean} - True if the password is valid, false otherwise.
      */
     static password(pwd) {
-      return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*.,_-]).{8,16}$/.test(
-        pwd
-      );
+      return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*.,_-]).{8,16}$/
+        .test(pwd);
     }
 
     /**
      * Check if an email is valid.
+     * @automata {finite} https://embed.ihateregex.io/make/JTVFKCUzRiUzQSU1QmEtejAtOSElMjMlMjQlMjUlMjYnKiUyQiUyRiUzRCUzRiU1RV8lNjAlN0IlN0MlN0R-LSU1RCUyQiglM0YlM0ElNUMlNUMuJTVCYS16MC05ISUyMyUyNCUyNSUyNicqJTJCJTJGJTNEJTNGJTVFXyU2MCU3QiU3QyU3RH4tJTVEJTJCKSolN0MlMjIoJTNGJTNBJTVCJTVDJTVDeDAxLSU1QyU1Q3gwOCU1QyU1Q3gwYiU1QyU1Q3gwYyU1QyU1Q3gwZS0lNUMlNUN4MWYlNUMlNUN4MjElNUMlNUN4MjMtJTVDJTVDeDViJTVDJTVDeDVkLSU1QyU1Q3g3ZiU1RCU3QyU1QyU1QyU1QyU1QyU1QiU1QyU1Q3gwMS0lNUMlNUN4MDklNUMlNUN4MGIlNUMlNUN4MGMlNUMlNUN4MGUtJTVDJTVDeDdmJTVEKSolMjIpJTQwKCUzRiUzQSglM0YlM0ElNUJhLXowLTklNUQoJTNGJTNBJTVCYS16MC05LSU1RColNUJhLXowLTklNUQpJTNGJTVDJTVDLiklMkIlNUJhLXowLTklNUQoJTNGJTNBJTVCYS16MC05LSU1RColNUJhLXowLTklNUQpJTNGJTdDJTVDJTVDJTVCKCUzRiUzQSglM0YlM0EoMig1JTVCMC01JTVEJTdDJTVCMC00JTVEJTVCMC05JTVEKSU3QzElNUIwLTklNUQlNUIwLTklNUQlN0MlNUIxLTklNUQlM0YlNUIwLTklNUQpKSU1QyU1Qy4pJTdCMyU3RCglM0YlM0EoMig1JTVCMC01JTVEJTdDJTVCMC00JTVEJTVCMC05JTVEKSU3QzElNUIwLTklNUQlNUIwLTklNUQlN0MlNUIxLTklNUQlM0YlNUIwLTklNUQpJTdDJTVCYS16MC05LSU1RColNUJhLXowLTklNUQlM0EoJTNGJTNBJTVCJTVDJTVDeDAxLSU1QyU1Q3gwOCU1QyU1Q3gwYiU1QyU1Q3gwYyU1QyU1Q3gwZS0lNUMlNUN4MWYlNUMlNUN4MjEtJTVDJTVDeDVhJTVDJTVDeDUzLSU1QyU1Q3g3ZiU1RCU3QyU1QyU1QyU1QyU1QyU1QiU1QyU1Q3gwMS0lNUMlNUN4MDklNUMlNUN4MGIlNUMlNUN4MGMlNUMlNUN4MGUtJTVDJTVDeDdmJTVEKSUyQiklNUMlNUMlNUQpJTI0
      * @param {string} email - The email to check.
      * @returns {boolean} - True if the email is valid, false otherwise.
      */
     static email(email) {
-      return /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/.test(
-        email
-      );
+      return /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
+        .test(email);
     }
 
     /**
      * Check if a phone number is valid.
+     * @automata {finite} https://embed.ihateregex.io/make/JTVFJTVCJTVDJTVDJTJCJTVEJTNGJTVCKCU1RCUzRiU1QjAtOSU1RCU3QjMlN0QlNUIpJTVEJTNGJTVCLSU1QyU1Q3MlNUMlNUMuJTVEJTNGJTVCMC05JTVEJTdCMyU3RCU1Qi0lNUMlNUNzJTVDJTVDLiU1RCUzRiU1QjAtOSU1RCU3QjQlMkM2JTdEJTI0
      * @param {string} phone - The phone number to check.
      * @returns {boolean} - True if the phone number is valid, false otherwise.
      */
     static phone(phone) {
-      return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(
-        phone
-      );
+      return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
+        .test(phone);
     }
-  };
+  }
 }
 
 class Url {
