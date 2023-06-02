@@ -45,18 +45,26 @@ namespace Webstop.Masters
       // If Signin session variable is null or 0, display "Sign In / Sign Up" switch, otherwise display "Sign Out" button
       SignBtn = $@"
 <ul>
-  {((Session["Signin"] as int? ?? 0) == 0
-    ? @"<li><a href='Signin'>Sign In</a></li>
-        <li><a href='Signup'>Sign Up</a></li>"
-    : @"<li><a onclick='document.getElementsByTagName(""dialog"")[0].showModal()'>Sign Out</a></li>")}
+  {(
+    (Session["Signin"] as int? ?? 0) == 0
+      ? @"<a href='/Signin'><li>Sign In</li></a>
+          <a href='/Signup'><li>Sign Up</li></a>"
+      : @"<a onclick='document.getElementById(""d_signout"").showModal()'><li>Sign Out</li></a>
+          <a href='/Profile'><li>Profile</li></a>"
+  )}
 </ul>";
 
       SQL.Connection conn = new SQL.Connection();
       // Generate the Admin button HTML markup based on the user's type
-      // If the user's type is 255, display "Admin" button, otherwise hide the button
-      AdminBtn = $"{conn.ExecuteDataTable($"select Type from Users where Id='{Session["Signin"] ?? 0}'").Rows[0][0]}";
-      AdminBtn = $"{conn.ExecuteDataTable(SQL.Syntax.Select("Users", new string[]{"Type"})).Rows[0][0]}".Equals("255")
-        ? $@"<a onclick=""location.pathname='/Admin'"">Admin</a>"
+      // If the user's type is 255, display the Admin buttons, otherwise hide the button
+      string tableName = "Users";
+      string[] columns = { "*" };
+      string condition = $"[Id]='{Session["Signin"] ?? 0}' AND [Type]='255'";
+      AdminBtn = conn.DoesExist(SQL.Syntax.Select(tableName, columns, condition))
+        ? $@"
+          <a href='/Admin/Users'><li>Users</li></a>
+          <a href='/Admin/Websites'><li>Websites</li></a>
+          <a href='/Admin/Reviews'><li>Reviews</li></a>"
         : "";
     }
   }

@@ -65,9 +65,11 @@ signIn.form.addEventListener("submit", (e) => {
 });
 
 // Event listener for sign up form submit
-signUp.form.addEventListener("submit", (e) => {
+signUp.submit.addEventListener("click", (e) => {
+  var flag = true;
   if (!Sign.check.name(signUp.name.value)) {
     showLabel(signUp.name, 0);
+    flag = false;
     e.preventDefault();
   } else {
     hideLabel(signUp.name, 0);
@@ -75,6 +77,7 @@ signUp.form.addEventListener("submit", (e) => {
 
   if (!Sign.check.email(signUp.email.value)) {
     showLabel(signUp.email, 0);
+    flag = false;
     e.preventDefault();
   } else {
     hideLabel(signUp.email, 0);
@@ -82,6 +85,7 @@ signUp.form.addEventListener("submit", (e) => {
 
   if (!Sign.check.password(signUp.password.value)) {
     showLabel(signUp.password, 0);
+    flag = false;
     e.preventDefault();
   } else {
     hideLabel(signUp.password, 0);
@@ -89,8 +93,14 @@ signUp.form.addEventListener("submit", (e) => {
 
   if (signUp.confirm.value !== signUp.password.value) {
     showLabel(signUp.confirm, 0);
+    flag = false;
     e.preventDefault();
   } else {
     hideLabel(signUp.confirm, 0);
+  }
+
+  if (flag) {
+    document.getElementById('terms-and-license').showModal();
+    document.getElementById('terms-and-license').scrollTop = 0;
   }
 });

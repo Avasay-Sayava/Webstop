@@ -3,7 +3,7 @@
  */
 function reloadTrBg() {
   const trList = Array.from(document.getElementsByTagName("tr"));
-  const bgColors = ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.2)"];
+  const bgColors = ["var(--background)", "var(--seconday)"];
   let bgIndex = 0;
 
   trList.filter(tr => tr.style.display !== "none").forEach(tr => {
@@ -21,7 +21,7 @@ function search() {
   tables.forEach(table => {
     const trList = Array.from(table.getElementsByTagName("tr"));
 
-    for (let i = 1; i < trList.length - 1; i++) {
+    for (let i = 2; i < trList.length; i++) {
       const inputs = Array.from(trList[i].getElementsByTagName("input"));
 
       for (let j = 0; j < 5; j++) {

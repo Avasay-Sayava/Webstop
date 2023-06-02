@@ -1,11 +1,15 @@
-﻿p {
-  margin: 0;
+﻿content {
+  justify-content: flex-start;
 
-  &:first-child {
-    font-size: 40vmin;
-  }
+  p {
+    margin: 0;
 
-  &:nth-child(2) {
-    font-size: 10vmin;
+    &:first-child {
+      font-size: 30vmin;
+    }
+
+    &:nth-child(2) {
+      font-size: 7vmin;
+    }
   }
 }

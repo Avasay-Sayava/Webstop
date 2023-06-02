@@ -1,4 +1,6 @@
-﻿content h1 {
+﻿@import '../../App_Themes/Dark/colors.css';
+@import '../../App_Themes/Light/colors.css';
+content h1 {
   font-weight: bold;
   margin: 0;
 }
@@ -16,7 +18,7 @@ content span {
   font-size: 12px;
 }
 content a {
-  color: #333;
+  color: var(--text);
   font-size: 14px;
   text-decoration: none;
   margin: 15px 0;
@@ -24,9 +26,9 @@ content a {
 content .button, content button {
   margin: 10px;
   border-radius: 20px;
-  border: 1px solid #2b5dff;
-  background-color: #2b5dff;
-  color: #FFFFFF;
+  border: none;
+  background-color: var(--main);
+  color: var(--secondary);
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
@@ -42,10 +44,11 @@ content .button:focus, content button:focus {
 }
 content .button.ghost, content button.ghost {
   background-color: transparent;
-  border-color: #FFFFFF;
+  border: 1px solid var(--secondary);
+  color: var(--secondary);
 }
 content form {
-  background-color: #FFFFFF;
+  background-color: var(--background);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +59,8 @@ content form {
 }
 content input:not(.button) {
   transition: 0.3s;
-  background-color: #eee;
+  background-color: var(--main);
+  color: var(--text);
   border: none;
   padding: 6px 7px;
   margin: 8px 0 0 0;
@@ -68,7 +72,7 @@ content input:not(.button):focus {
   border-bottom: 2px solid rgb(0, 200, 35);
 }
 content .container {
-  background-color: #fff;
+  background-color: var(--background);
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
@@ -122,92 +126,6 @@ content .container.right-panel-active .overlay-right {
     min-height: 90%;
   }
 }
-@media screen and (orientation: portrait) {
-  content .container {
-    max-width: 90%;
-    min-height: 90%;
-    transform: none;
-  }
-  content .container .sign-in-container {
-    transition: 0.4s ease-in;
-    width: 100%;
-    height: 70%;
-  }
-  content .container .sign-up-container {
-    transition: 0.4s ease-in;
-    transform: translateY(-70%);
-    width: 100%;
-    height: 70%;
-    opacity: 0;
-    z-index: -1;
-  }
-  content .container .overlay-container {
-    transform: translate(-50%, 234%);
-    width: 100%;
-    height: 30%;
-  }
-  content .container .overlay {
-    transform: translate(100%, 0);
-    width: 100%;
-  }
-  content .container .overlay-left {
-    transition: 0.3s ease-in;
-    transform: translate(0, -90%);
-    width: 100%;
-    height: 30%;
-    opacity: 0;
-    z-index: -1;
-  }
-  content .container .overlay-right {
-    transition: 0.6s ease-in-out;
-    transform: translate(0, 110%);
-    width: 100%;
-    height: 30%;
-    opacity: 1;
-    z-index: 5;
-  }
-  content .container.right-panel-active .sign-in-container {
-    transition: 0.4s ease-in;
-    transform: translateY(70%);
-    width: 100%;
-    height: 70%;
-    opacity: 0;
-    z-index: -1;
-  }
-  content .container.right-panel-active .sign-up-container {
-    transition: 0.4s ease-in;
-    transform: translateY(0);
-    width: 100%;
-    height: 70%;
-    opacity: 1;
-    z-index: 5;
-  }
-  content .container.right-panel-active .overlay-container {
-    transform: translate(-50%, 234%);
-    width: 100%;
-    height: 30%;
-  }
-  content .container.right-panel-active .overlay {
-    transform: translate(100%, 0);
-    width: 100%;
-  }
-  content .container.right-panel-active .overlay-left {
-    transition: 0.6s ease-in-out;
-    transform: translate(0, 110%);
-    width: 100%;
-    height: 30%;
-    opacity: 1;
-    z-index: 5;
-  }
-  content .container.right-panel-active .overlay-right {
-    transition: 0.3s ease-in;
-    transform: translate(0, 310%);
-    width: 100%;
-    height: 30%;
-    opacity: 0;
-    z-index: -1;
-  }
-}
 content .form-container {
   position: absolute;
   top: 0;
@@ -236,11 +154,11 @@ content .overlay-container {
   z-index: 100;
 }
 content .overlay {
-  background: linear-gradient(to right, #2b5dff, #2bb8ff);
+  background: linear-gradient(to right, var(--main), var(--hover));
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
-  color: #FFFFFF;
+  color: var(--secondary);
   position: relative;
   left: -100%;
   height: 100%;
@@ -273,7 +191,7 @@ content .social-container {
   margin: 20px 0;
 }
 content .social-container a {
-  border: 1px solid #DDDDDD;
+  border: 1px solid var(--text);
   border-radius: 50%;
   display: inline-flex;
   justify-content: center;
@@ -296,4 +214,23 @@ content #Content_error {
   font-size: 10px;
   text-align: start;
   align-self: start;
+}
+content dialog[open] {
+  position: relative;
+  height: calc(100% - 100px);
+  max-width: 700px;
+  overflow: auto;
+}
+content dialog[open] h1 {
+  margin-top: 1em;
+}
+content dialog[open] p {
+  text-align: start;
+}
+content dialog[open] form {
+  display: flex;
+  flex-direction: row;
+}
+content dialog[open] form input {
+  margin: 1em;
 }

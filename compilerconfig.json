@@ -24,7 +24,27 @@
     "inputFile": "wwwroot/css/default.scss"
   },
   {
-    "outputFile": "TTT/TTT.css",
-    "inputFile": "TTT/TTT.scss"
+    "outputFile": "wwwroot/css/profile.css",
+    "inputFile": "wwwroot/css/profile.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/about.css",
+    "inputFile": "wwwroot/css/about.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/home.css",
+    "inputFile": "wwwroot/css/home.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/site.css",
+    "inputFile": "wwwroot/css/site.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/sites.css",
+    "inputFile": "wwwroot/css/sites.scss"
+  },
+  {
+    "outputFile": "App_Themes/Light/colors.css",
+    "inputFile": "App_Themes/Light/colors.scss"
   }
 ]

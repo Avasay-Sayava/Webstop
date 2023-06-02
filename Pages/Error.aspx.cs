@@ -1,24 +1,31 @@
-﻿using Microsoft.Ajax.Utilities;
-using System;
+﻿using System;
+using System.Net;
 using System.Text.RegularExpressions;
 
 namespace Webstop.Pages
 {
   public partial class Error : System.Web.UI.Page
   {
+    /// <summary>
+    /// The HTTP status code.
+    /// </summary>
     public string code;
+
+    /// <summary>
+    /// The corresponding HTTP status message.
+    /// </summary>
     public string msg;
+
+    /// <summary>
+    /// Event handler for the Page_Load event.
+    /// </summary>
     protected void Page_Load(object sender, EventArgs e)
     {
-      code = Regex.IsMatch(Request.QueryString["code"] ?? "", @"^\d{3}$")
-        ? Request.QueryString["code"] ?? ""
-        : "400";
-      msg = Regex.IsMatch(Request.QueryString["msg"] ?? "", @"^[A-Za-z./ ']+\.$")
-        ? Request.QueryString["msg"] ?? ""
-          .Replace("/Pages/", "")
-          .Replace(".aspx", "")
-          .Replace("file", "page")
-        : $"Error code {code}";
+      // Get the code from the query string or default to "400" if invalid
+      code = Regex.IsMatch(Request.QueryString["code"], @"^\d{3}$") ? Request.QueryString["code"] : "400";
+
+      // Get the corresponding HTTP status message based on the code
+      msg = HttpStatusMessage.Get(code);
     }
   }
 }

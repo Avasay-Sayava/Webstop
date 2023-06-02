@@ -1,70 +1,84 @@
-﻿#container {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-  border-radius: 10px;
-  position: absolute;
-  top: calc(5vh + 50px);
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: fit-content;
-  max-height: 90vh;
-  overflow: auto;
-}
+﻿@import '../../App_Themes/Dark/colors.css';
+@import '../../App_Themes/Light/colors.css';
 
-table {
-  width: 100%;
-}
+content {
+  justify-content: start;
 
-tr {
-  display: block;
-  width: 100%;
-}
+  p:first-child {
+    font-size: 2rem;
+    margin: 1em;
+  }
 
-td {
-  padding: 10px 20px;
-  width: fit-content;
-}
+  #container {
+    margin: 1em;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    border-radius: 10px;
+    position: relative;
+    width: fit-content;
+    max-height: 90vh;
+    overflow: auto;
+  }
 
-.sticky {
-  background: linear-gradient(to right, #2b97ff, #2bb8ff);
-  display: flex;
-  flex-direction: row;
-  top: 0;
-  position: sticky;
+  table {
+    width: 100%;
+  }
 
-  div {
-    font-size: 17px;
+  tr {
+    display: block;
+    width: 100%;
+  }
+
+  td {
     padding: 10px 20px;
-    width: 140px;
-    
-    &:nth-child(5) {
-      width: 90px;
+    width: fit-content;
+  }
+
+  .sticky {
+    background: linear-gradient(to right, var(--main), var(--hover));
+    display: flex;
+    flex-direction: row;
+    top: 0;
+    position: sticky;
+
+    div {
+      color: var(--text);
+      font-size: 17px;
+      padding: 10px 20px;
+      width: 140px;
+
+      &:nth-last-child(2) {
+        width: 120px;
+      }
+
+      &:nth-last-child(1) {
+        width: 170px;
+      }
     }
   }
-}
 
-input {
-  &[type=search],
-  &[type=text] {
-    border: none;
-    outline: none;
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-    width: 100px;
-  }
-
-  &[type=number] {
-    border: none;
-    outline: none;
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-    width: 50px;
-  }
-
-  &[type=button],
-  &[type=submit] {
+  input {
     padding: 5px;
-    margin: 5px;
+    color: var(--text);
+    border-radius: 5px;
+    background-color: var(--main);
+
+    &[type=search],
+    &[type=text],
+    &[type=datetime] {
+      border: none;
+      outline: none;
+      width: 100px;
+    }
+
+    &[type=number] {
+      border: none;
+      outline: none;
+      width: 70px;
+    }
+
+    &[type=button],
+    &[type=submit] {
+      margin: 5px;
+    }
   }
 }

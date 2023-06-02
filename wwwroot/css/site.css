@@ -1,0 +1,54 @@
+﻿@import '../../App_Themes/Dark/colors.css';
+@import '../../App_Themes/Light/colors.css';
+content {
+  justify-content: start;
+}
+content button {
+  background-color: var(--main);
+  color: var(--text);
+  transition: 200ms;
+  border-radius: 5px;
+  margin-top: 2em;
+  padding: 0.5em;
+}
+content #title {
+  position: relative;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  margin: 2em 0 1em 0;
+  background-color: var(--main);
+  color: var(--secondary);
+  border-radius: 20px;
+  width: 70vw;
+}
+content #title a {
+  font-size: 1rem;
+  margin: 0 1em 0 0.5em;
+  color: var(--secondary);
+  cursor: pointer;
+}
+content #title i:not(.fa-star) {
+  color: var(--secondary);
+  position: absolute;
+  font-size: 2.5rem;
+  right: 20px;
+}
+content #title i.fa-star {
+  margin: 1px;
+  color: rgb(189, 173, 0);
+}
+content div:not(#title) {
+  width: 60vw;
+  margin: 1em;
+  padding: 1em;
+}
+content div:not(#title) h3 {
+  padding: 1em;
+  font-size: 1.5rem;
+}
+content div:not(#title) i.fa-star {
+  margin: 1px;
+  color: rgb(189, 173, 0);
+}

@@ -1,12 +1,12 @@
 ﻿class Theme {
   /**
-   * Set the theme and save it in a cookie.
+   * Set the theme.
    * @param {string} theme - The theme to set.
-   * @returns {Promise<string>} - A Promise that resolves to the saved theme.
+   * @returns {void}
    */
   static set(theme) {
     document.body.setAttribute("theme", theme);
-    return Cookies.set("theme", theme);
+    document.querySelector("dialog").setAttribute("theme", theme);
   }
 
   /**
@@ -19,97 +19,44 @@
 
   /**
    * Swap between the current theme and the opposite theme.
-   * @returns {Promise<string>} - A Promise that resolves to the updated theme.
+   * @returns {void}
    */
   static swap() {
-    return this.set(this.get() ? "dark" : "light");
-  }
-}
-
-class Cookies {
-  /**
-   * Set a cookie with the specified name, value, and expiration date.
-   * @param {string} name - The name of the cookie.
-   * @param {string} value - The value of the cookie.
-   * @param {number} expires - The expiration period in days.
-   * @param {boolean} force - Force setting the cookie even if the "allow" cookie is not set.
-   * @returns {Promise<void>} - A promise that resolves when the cookie is set.
-   */
-  static set(name, value, expires = 30, force = false) {
-    if ((this.get("allow") == null || name == "allow") && !force)
-      return Promise.resolve();
-    let d = new Date();
-    d.setTime(new Date().getTime() + expires * 24 * 60 * 60 * 1000);
-    document.cookie = `${name}=${value}; expires=${d.toUTCString()}`;
-    location.reload();
-    return Promise.resolve();
-  }
-
-  /**
-   * Get the value of a cookie with the specified name.
-   * If no name is provided, returns an array of all cookies.
-   * @param {string|null} name - The name of the cookie to get.
-   * @returns {string|null|Array<string>} - The value of the cookie, null if not found, or an array of all cookies.
-   */
-  static get(name = null) {
-    let cookies = document.cookie.split('; ');
-    if (name == null) {
-      return cookies.map(cookie => cookie.substring(cookie.split("=")[0].length + 1));
-    } else {
-      for (var cookie of cookies) {
-        if (cookie.split("=")[0] == name)
-          return cookie.substring(name.length + 1);
-      }
-      return null;
-    }
-  }
-
-  /**
-   * Clear all cookies.
-   * @param {boolean} force - Force clearing the cookies even if the "allow" cookie is not set.
-   * @returns {Promise<void>} - A promise that resolves when the cookies are cleared.
-   */
-  static clear(force = false) {
-    for (var cookie of this.get()) {
-      this.set(cookie, "null", 0, force);
-    }
-    return Promise.resolve();
-  }
-
-  /**
-   * Accept the use of cookies by setting the "allow" cookie and updating the theme.
-   * @returns {Promise<void>} - A promise that resolves when the "allow" cookie is set and the theme is updated.
-   */
-  static accept() {
-    return this.set("allow", "true", true).then(() => {
-      return Theme.set(Theme.get());
-    });
-  }
-
-  /**
-   * Decline the use of cookies by clearing all cookies.
-   * @returns {Promise<void>} - A promise that resolves when all cookies are cleared.
-   */
-  static decline() {
-    return this.clear(true);
+    this.set(this.get() == "light" ? "dark" : "light");
   }
 }
 
 class Sign {
   static check = class {
     /**
-     * Check if a name is valid.
+     * Regular expression for name validation.
+     *
+     * Explanation:
+     *   ^                   - Start of the input
+     *   (?:                 - Non-capturing group
+     *     [A-Z][a-z]+       - Match an uppercase letter followed by one or more lowercase letters
+     *     \s                - Match a whitespace character
+     *   )+                  - Match the group one or more times
+     *   [A-Z][a-z]+         - Match an uppercase letter followed by one or more lowercase letters
+     *   $                   - End of the input
      * @automata {finite} https://embed.ihateregex.io/make/JTVFKCUzRiUzQSU1QkEtWiU1RCU1QmEteiU1RCUyQiUyMCklMkIlNUJBLVolNUQlNUJhLXolNUQlMkIlMjQ
      * @param {string} name - The name to check.
      * @returns {boolean} - True if the name is valid, false otherwise.
      */
     static name(name) {
-      return /^(?:[A-Z][a-z]+ )+[A-Z][a-z]+$/
-        .test(name);
+      return /^(?:[A-Z][a-z]+ )+[A-Z][a-z]+$/.test(name);
     }
 
     /**
-     * Check if a password is valid.
+     * Regular expression for password validation.
+     * Explanation:
+     *   ^                  - Start of the input
+     *   (?=.*?[A-Z])       - Positive lookahead for at least one uppercase letter
+     *   (?=.*?[a-z])       - Positive lookahead for at least one lowercase letter
+     *   (?=.*?[0-9])       - Positive lookahead for at least one digit
+     *   (?=.*?[#?!@$%^&*.,_-]) - Positive lookahead for at least one special character
+     *   .{8,16}            - Match any character between 8 and 16 times
+     *   $                  - End of the input
      * @automata {finite} https://embed.ihateregex.io/make/JTVFKCUzRiUzRC4qJTNGJTVCQS1aJTVEKSglM0YlM0QuKiUzRiU1QmEteiU1RCkoJTNGJTNELiolM0YlNUIwLTklNUQpKCUzRiUzRC4qJTNGJTVCJTIzJTNGISU0MCUyNCUyNSU1RSUyNiouJTJDXy0lNUQpLiU3QjglMkMxNiU3RCUyNA
      * @param {string} pwd - The password to check.
      * @returns {boolean} - True if the password is valid, false otherwise.
@@ -120,17 +67,62 @@ class Sign {
     }
 
     /**
-     * Check if an email is valid.
+     * Validates an email input value using a regular expression.
+     * Explanation:
+     *   ^                               - Start of the input
+     *   (?:                             - Start of non-capturing group
+     *   [a-z0-9!#$%&*+/=?^_`{|}~-]+     - One or more valid email characters (local part)
+     *   (?:\.[a-z0-9!#$%&*+/=?^_`{|}~-]+)* - Zero or more sequences of a dot followed by valid email characters (domain parts)
+     *   |                               - Alternation (or)
+     *   "                               - Opening double quote (for quoted email)
+     *   (?:                             - Start of non-capturing group
+     *   [\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f] - Valid ASCII characters for the quoted string (excluding double quote and backslash)
+     *   |                               - Alternation (or)
+     *   \\[\x01-\x09\x0b\x0c\x0e-\x7f]  - Valid escaped characters in the quoted string
+     *   )*                              - Zero or more sequences of valid characters or escaped characters in the quoted string
+     *   "                               - Closing double quote (for quoted email)
+     *   )@                              - End of local part and '@' symbol
+     *   (?:                             - Start of non-capturing group
+     *   (?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+ - One or more subdomains (not starting with a hyphen)
+     *   [a-z0-9](?:[a-z0-9-]*[a-z0-9])? - Domain name consisting of at least two alphanumeric characters
+     *   |                               - Alternation (or)
+     *   \[                              - Opening square bracket (for IP address)
+     *   (?:                             - Start of non-capturing group
+     *   (?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\. - IP address segments (numbers between 0 and 255)
+     *   ){3}                            - Three occurrences of IP address segments
+     *   (?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9] - Fourth IP address segment or domain name (not starting with a hyphen)
+     *   :                               - Colon separator (for port number)
+     *   (?:                             - Start of non-capturing group
+     *   [\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f] - Valid ASCII characters for the port number (excluding double quote and backslash)
+     *   |                               - Alternation (or)
+     *   \\[\x01-\x09\x0b\x0c\x0e-\x7f]  - Valid escaped characters in the port number
+     *   )+                              - One or more sequences of valid characters or escaped characters in the port number
+     *   )                               - End of non-capturing group
+     *   \]                              - Closing square bracket (for IP address)
+     *   )                               - End of non-capturing group
+     *   $                               - End of the input
      * @automata {finite} https://embed.ihateregex.io/make/JTVFKCUzRiUzQSU1QmEtejAtOSElMjMlMjQlMjUlMjYnKiUyQiUyRiUzRCUzRiU1RV8lNjAlN0IlN0MlN0R-LSU1RCUyQiglM0YlM0ElNUMlNUMuJTVCYS16MC05ISUyMyUyNCUyNSUyNicqJTJCJTJGJTNEJTNGJTVFXyU2MCU3QiU3QyU3RH4tJTVEJTJCKSolN0MlMjIoJTNGJTNBJTVCJTVDJTVDeDAxLSU1QyU1Q3gwOCU1QyU1Q3gwYiU1QyU1Q3gwYyU1QyU1Q3gwZS0lNUMlNUN4MWYlNUMlNUN4MjElNUMlNUN4MjMtJTVDJTVDeDViJTVDJTVDeDVkLSU1QyU1Q3g3ZiU1RCU3QyU1QyU1QyU1QyU1QyU1QiU1QyU1Q3gwMS0lNUMlNUN4MDklNUMlNUN4MGIlNUMlNUN4MGMlNUMlNUN4MGUtJTVDJTVDeDdmJTVEKSolMjIpJTQwKCUzRiUzQSglM0YlM0ElNUJhLXowLTklNUQoJTNGJTNBJTVCYS16MC05LSU1RColNUJhLXowLTklNUQpJTNGJTVDJTVDLiklMkIlNUJhLXowLTklNUQoJTNGJTNBJTVCYS16MC05LSU1RColNUJhLXowLTklNUQpJTNGJTdDJTVDJTVDJTVCKCUzRiUzQSglM0YlM0EoMig1JTVCMC01JTVEJTdDJTVCMC00JTVEJTVCMC05JTVEKSU3QzElNUIwLTklNUQlNUIwLTklNUQlN0MlNUIxLTklNUQlM0YlNUIwLTklNUQpKSU1QyU1Qy4pJTdCMyU3RCglM0YlM0EoMig1JTVCMC01JTVEJTdDJTVCMC00JTVEJTVCMC05JTVEKSU3QzElNUIwLTklNUQlNUIwLTklNUQlN0MlNUIxLTklNUQlM0YlNUIwLTklNUQpJTdDJTVCYS16MC05LSU1RColNUJhLXowLTklNUQlM0EoJTNGJTNBJTVCJTVDJTVDeDAxLSU1QyU1Q3gwOCU1QyU1Q3gwYiU1QyU1Q3gwYyU1QyU1Q3gwZS0lNUMlNUN4MWYlNUMlNUN4MjEtJTVDJTVDeDVhJTVDJTVDeDUzLSU1QyU1Q3g3ZiU1RCU3QyU1QyU1QyU1QyU1QyU1QiU1QyU1Q3gwMS0lNUMlNUN4MDklNUMlNUN4MGIlNUMlNUN4MGMlNUMlNUN4MGUtJTVDJTVDeDdmJTVEKSUyQiklNUMlNUMlNUQpJTI0
      * @param {string} email - The email to check.
      * @returns {boolean} - True if the email is valid, false otherwise.
      */
     static email(email) {
-      return /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
+      return /^(?:[a-z0-9!#$%&*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
         .test(email);
     }
 
     /**
+     * Validates a phone number input value using a regular expression.
+     * Explanation:
+     *   ^               - Start of the input
+     *   [\+]?           - Optional "+" character
+     *   [(]?            - Optional "(" character
+     *   [0-9]{3}        - Exactly three digits (0-9)
+     *   [)]?            - Optional ")" character
+     *   [-\s\.]?        - Optional "-" or whitespace or "." character
+     *   [0-9]{3}        - Exactly three digits (0-9)
+     *   [-\s\.]?        - Optional "-" or whitespace or "." character
+     *   [0-9]{4,6}      - Four to six digits (0-9)
+     *   $               - End of the input
      * Check if a phone number is valid.
      * @automata {finite} https://embed.ihateregex.io/make/JTVFJTVCJTVDJTVDJTJCJTVEJTNGJTVCKCU1RCUzRiU1QjAtOSU1RCU3QjMlN0QlNUIpJTVEJTNGJTVCLSU1QyU1Q3MlNUMlNUMuJTVEJTNGJTVCMC05JTVEJTdCMyU3RCU1Qi0lNUMlNUNzJTVDJTVDLiU1RCUzRiU1QjAtOSU1RCU3QjQlMkM2JTdEJTI0
      * @param {string} phone - The phone number to check.
@@ -143,19 +135,5 @@ class Sign {
   }
 }
 
-class Url {
-  /**
-   * Get the value of a URL parameter by its name.
-   * @param {string} name - The name of the parameter.
-   * @returns {string|null} - The value of the parameter or null if not found.
-   */
-  static param(name) {
-    var url = window.location.search.substring(1);
-    var vars = url.split("&");
-    for (var param of vars) {
-      var params = param.split("=");
-      if (params[0] == name) return params[1];
-    }
-    return null;
-  }
-}
+// Sets the theme to light
+Theme.set("light");

@@ -161,6 +161,34 @@ namespace SQL
     }
 
     /// <summary>
+    /// Retrieves the next integer value from an identity column in the specified table.
+    /// </summary>
+    /// <param name="tableName">The name of the table.</param>
+    /// <returns>The next integer value from the identity column.</returns>
+    public int ExecuteNextIdentityValue(string tableName)
+    {
+      int nextValue = 0;
+
+      Conn.Open();
+
+      // Construct the SQL query to insert a dummy row and retrieve the next identity value
+      string query = $"SELECT IDENT_CURRENT('{tableName}') + 1";
+
+      // Execute the query
+      using (SqlCommand command = new SqlCommand(query, Conn))
+      {
+        // Retrieve the result of the query
+        object result = command.ExecuteScalar();
+
+        // Convert the result to an integer
+        nextValue = Convert.ToInt32(result);
+      }
+
+      // Return the next identity value
+      return nextValue;
+    }
+
+    /// <summary>
     /// Executes a SQL query and generates an HTML table with form elements based on the result set.
     /// </summary>
     /// <param name="sql">The SQL query to execute.</param>
@@ -229,7 +257,7 @@ namespace SQL
 
         html += $@"
       <td>
-        <input {addons[index]} placeHolder='{name}' type='text' name='{name.ToLower()}' value='{(name.ToLower().Equals("id") ? $"{(int)dt.Rows[dt.Rows.Count - 1].ItemArray[index] + 1}" : "")}' />
+        <input {addons[index]} placeHolder='{name}' type='text' name='{name.ToLower()}' value='{(name.ToLower().Equals("id") ? ExecuteNextIdentityValue("Users").ToString() : "")}' />
       </td>";
       }
 
@@ -272,6 +300,50 @@ namespace SQL
       // Return the generated HTML table with form elements
       return html;
     }
+
+    /// <summary>
+    /// Generates an HTML form with inputs for the user to edit their password, email, and name.
+    /// </summary>
+    /// <param name="action">The action attribute of the form.</param>
+    /// <param name="columns">An array of column names to be used as input names and IDs.</param>
+    /// <param name="labels">An array of labels to be displayed for each input field.</param>
+    /// <param name="id">The user's ID.</param>
+    /// <returns>The HTML form for editing the user's profile.</returns>
+    public string ExecuteProfileForm(string action, string[] columns, string[] labels, int id)
+    {
+      // Retrieve the user's data from the database
+      DataTable dt = ExecuteDataTable(Syntax.Select("Users", columns, $"[Id]='{id}'"));
+      // Get the first row of the retrieved data
+      DataRow dr = dt.Rows[0];
+
+      // Start building the HTML form string
+      string html = $@"
+<form method='post' runat='server' action='{action}'>";
+
+      // Generate HTML form inputs based on the provided columns and labels
+      for (int i = 0; i < columns.Length; i++)
+      {
+        // Get the current column name and label
+        string columnName = columns[i];
+        string label = labels[i];
+
+        // Create an input field for the current column and populate it with the corresponding data from the DataRow
+        html += $@"
+  <input type='text' id='{columnName.ToLower()}' placeHolder='{columnName}' name='{columnName.ToLower()}' value='{dr[columnName]}'>";
+
+        // Create a label for the current column (optional)
+        html += $@"
+  <label for='{columnName.ToLower()}'>{label}</label>";
+      }
+
+      // Add the submit button to the form
+      html += $@"
+  <input type='submit' id='submit' name='submit' value='Apply Changes' />
+</form>";
+
+      // Return the complete HTML form string
+      return html;
+    }
   }
 
   /// <summary>
@@ -279,6 +351,11 @@ namespace SQL
   /// </summary>
   internal class Syntax
   {
+    public static string Select(string tableName, string column, string condition = null)
+    {
+      return Select(tableName, new string[] { column }, condition);
+    }
+
     /// <summary>
     /// Generates a SELECT query to retrieve specified columns from a table.
     /// </summary>
@@ -292,12 +369,17 @@ namespace SQL
       condition = condition == null ? "" : $"WHERE {condition}";
 
       // Join the column names with a comma separator
-      string columnNames = string.Join(", ", columns.Select((col, index) => $"[{col}]"));
+      string columnNames = string.Join(", ", columns.Select((col, index) => col.Equals("*") ? "*" : $"[{col}]"));
 
       // Generate the SELECT query string
       string query = $"SELECT {columnNames} FROM [{tableName}] {condition}";
 
       return query;
+    }
+
+    public static string Insert(string tableName, string column, object value)
+    {
+      return Insert(tableName, new string[] { column }, new object[] { value });
     }
 
     /// <summary>
@@ -319,6 +401,11 @@ namespace SQL
       string query = $"INSERT INTO [{tableName}] ({columnNames}) VALUES ({parameterNames})";
 
       return query;
+    }
+
+    public static string Update(string tableName, string column, object value, string condition)
+    {
+      return Update(tableName, new string[] { column }, new object[] { value }, condition);
     }
 
     /// <summary>
@@ -385,7 +472,7 @@ namespace SQL
       }
       else if (value is DateTime date)
       {
-        return $@"'{date:dd/MM/yyyy HH:mm:ss.fff}'";
+        return $@"CAST('{date:dd/MM/yyyy HH:mm:ss.fff}' AS DATETIME)";
       }
       else
       {

@@ -2,9 +2,6 @@
 
 namespace Webstop.Pages
 {
-  /// <summary>
-  /// Represents the signup page of the website.
-  /// </summary>
   public partial class Signup : System.Web.UI.Page
   {
     /// <summary>
@@ -25,11 +22,12 @@ namespace Webstop.Pages
         if (!conn.DoesExist($"select * from Users where Email='{Request.Form["up-email"]}'"))
         {
           // Add a new user to the database
-          conn.DoQuery(SQL.Syntax.Insert("Users", new string[] {"Name", "Password", "Email", "Join" }, new object[] { Request.Form["up-name"], Request.Form["up-password"], Request.Form["up-email"], DateTime.Now }));
-          Response.Redirect("Home");
+          conn.DoQuery(SQL.Syntax.Insert("Users", new string[] {"Name", "Password", "Email", "Join", "Last" }, new object[] { Request.Form["up-name"], Request.Form["up-password"], Request.Form["up-email"], DateTime.Now, DateTime.Now }));
 
           // Set the session variable for signed-in user
           Session["Signin"] = conn.ExecuteDataTable($"select * from Users where email='{Request.Form["up-email"]}'").Rows[0][0];
+          
+          Response.Redirect("Home");
         }
         else
         {

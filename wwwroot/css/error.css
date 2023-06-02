@@ -1,9 +1,12 @@
-﻿p {
+﻿content {
+  justify-content: flex-start;
+}
+content p {
   margin: 0;
 }
-p:first-child {
-  font-size: 40vmin;
+content p:first-child {
+  font-size: 30vmin;
 }
-p:nth-child(2) {
-  font-size: 10vmin;
+content p:nth-child(2) {
+  font-size: 7vmin;
 }

@@ -2,9 +2,6 @@
 
 namespace Webstop.Pages
 {
-  /// <summary>
-  /// Represents the signin page of the website.
-  /// </summary>
   public partial class Signin : System.Web.UI.Page
   {
     /// <summary>
@@ -21,14 +18,24 @@ namespace Webstop.Pages
       // Check if the form was submitted
       if (Request.Form["in-submit"] != null)
       {
+        string tableName = "Users";
+        string[] columns = { "*" };
+        string condition = $"[Email]='{Request.Form["in-email"]}' AND [Password]='{Request.Form["in-password"]}'";
+
         // Check if the user exists in the database
-        if (conn.DoesExist($"select * from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'"))
+        if (conn.DoesExist(SQL.Syntax.Select(tableName, columns, condition)))
         {
+          columns = new string[] { "Id" };
+
           // Set the session variable for signed-in user
-          Session["Signin"] = (int)conn.ExecuteDataTable($"select Id from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'").Rows[0][0];
+          Session["Signin"] = (int)conn.ExecuteDataTable(SQL.Syntax.Select(tableName, columns, condition)).Rows[0][0];
+          
+          columns = new string[] { "Last" };
+
+          conn.DoQuery(SQL.Syntax.Update(tableName, columns, new object[] {DateTime.Now}, $"[id]='{Session["Signin"] as int? ?? 0}'"));
 
           // Redirect to the appropriate page based on user type
-          Response.Redirect(conn.DoesExist($"select * from Users where Id='{Session["Signin"]}' and Type=255") ? "Admin" : "Home");
+          Response.Redirect(conn.DoesExist($"select * from Users where Id='{Session["Signin"]}' and Type=255") ? "Admin/Users" : "Home");
         }
         else
         {
