@@ -12,6 +12,8 @@ namespace Webstop.Pages
     /// </summary>
     protected void Page_Load(object sender, EventArgs e)
     {
+      SQL.Connection conn = new SQL.Connection();
+
       // Hide the exist and error elements initially
       exist.Visible = false;
       error.Visible = false;
@@ -20,13 +22,13 @@ namespace Webstop.Pages
       if (Request.Form["in-submit"] != null)
       {
         // Check if the user exists in the database
-        if (SQL.Manager.DoesExist($"select * from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'"))
+        if (conn.DoesExist($"select * from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'"))
         {
           // Set the session variable for signed-in user
-          Session["Signin"] = (int)SQL.Manager.ExecuteDataTable($"select Id from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'").Rows[0][0];
+          Session["Signin"] = (int)conn.ExecuteDataTable($"select Id from Users where Email='{Request.Form["in-email"]}' and Password='{Request.Form["in-password"]}'").Rows[0][0];
 
           // Redirect to the appropriate page based on user type
-          Response.Redirect(SQL.Manager.DoesExist($"select * from Users where Id='{Session["Signin"]}' and Type=255") ? "Admin" : "Home");
+          Response.Redirect(conn.DoesExist($"select * from Users where Id='{Session["Signin"]}' and Type=255") ? "Admin" : "Home");
         }
         else
         {

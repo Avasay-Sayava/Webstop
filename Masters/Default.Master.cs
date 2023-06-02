@@ -45,10 +45,11 @@ namespace Webstop.Masters
     : @"<li><a href='Signout'>Sign Out</a></li>")}
 </ul>";
 
+      SQL.Connection conn = new SQL.Connection();
       // Generate the Admin button HTML markup based on the user's type
       // If the user's type is 255, display "Admin" button, otherwise hide the button
-      AdminBtn = $"{SQL.Manager.ExecuteDataTable($"select Type from Users where Id='{Session["Signin"] ?? 0}'").Rows[0][0]}";
-      AdminBtn = $"{SQL.Manager.ExecuteDataTable(SQL.Syntax.Select("Users", new string[]{"Type"})).Rows[0][0]}".Equals("255")
+      AdminBtn = $"{conn.ExecuteDataTable($"select Type from Users where Id='{Session["Signin"] ?? 0}'").Rows[0][0]}";
+      AdminBtn = $"{conn.ExecuteDataTable(SQL.Syntax.Select("Users", new string[]{"Type"})).Rows[0][0]}".Equals("255")
         ? $@"<a onclick=""location.pathname='/Admin'"">Admin</a>"
         : "";
     }

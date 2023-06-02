@@ -22,7 +22,7 @@ namespace SQL
     /// Initializes a new instance of the Connection class with the provided connection string.
     /// </summary>
     /// <param name="connStr">The connection string to use for the SQL connection.</param>
-    public Connection(string connStr)
+    public Connection(string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True")
     {
       Conn = new SqlConnection(connStr);
     }
@@ -35,6 +35,12 @@ namespace SQL
     {
       Conn = conn;
     }
+
+    /// <summary>
+    /// Gets the SqlConnection object associated with this Connection instance.
+    /// </summary>
+    /// <returns>The SqlConnection object.</returns>
+    public SqlConnection GetConnection() => Conn;
 
     /// <summary>
     /// Executes a query SQL statement on the SQL.Manager using the provided or default connection string.
@@ -70,7 +76,7 @@ namespace SQL
       // Execute the SQL query and retrieve the result as a DataTable
       DataTable dt = ExecuteDataTable(sql);
 
-      // Initialize a object array of object arrays to store the result
+      // Initialize an object array of object arrays to store the result
       object[][] table = new object[dt.Rows.Count][];
 
       // Copy the DataRow collection into table
@@ -152,6 +158,84 @@ namespace SQL
 
       // Return the number of rows affected by the SQL statement
       return rowsAffected;
+    }
+
+    /// <summary>
+    /// Executes a SQL query and generates an HTML table with form elements based on the result set.
+    /// </summary>
+    /// <param name="sql">The SQL query to execute.</param>
+    /// <param name="action">The action attribute of the form.</param>
+    /// <param name="addons">Additional attributes to apply to the form inputs (optional).</param>
+    /// <returns>The HTML table with form elements.</returns>
+    public string ExecuteTableForm(string sql, string action, string[] addons = null)
+    {
+      // Execute the SQL query and retrieve the result set as a DataTable
+      DataTable dt = ExecuteDataTable(sql);
+
+      // If addons array is null, initialize it with empty strings for each column in the DataTable
+      addons = addons ?? new string[dt.Columns.Count];
+
+      // Adjust the length of the addons array to match the number of columns in the DataTable
+      Array.Resize(ref addons, dt.Columns.Count);
+
+      // Generate the HTML table with form elements
+      string html = $@"
+<table>
+  <tr>
+    <form>";
+
+      // Generate the search form inputs
+      foreach (DataColumn column in dt.Columns)
+      {
+        int index = column.Ordinal;
+        string name = column.ColumnName;
+
+        html += $@"
+      <td>
+        <input {addons[index].Replace("readonly", string.Empty).Replace("disabled", string.Empty)} placeholder='{name}' id='search-{index}' type='text' name='{name}' />
+      </td>";
+      }
+
+      html += $@"
+      <td>
+        <input type='button' name='search' value='search' onclick='search()' />
+      </td>
+    </form>
+  </tr>";
+
+      // Generate the table rows with form elements for each row in the DataTable
+      foreach (DataRow row in dt.Rows)
+      {
+        html += $@"
+  <tr>
+    <form method='post' action='{action}'>";
+
+        // Generate the form inputs for each column in the row
+        foreach (DataColumn column in dt.Columns)
+        {
+          int index = column.Ordinal;
+          string name = column.ColumnName;
+          string value = row[name].ToString();
+
+          html += $@"
+      <td>
+        <input {addons[index]} id='{index}' type='text' name='{name}' value='{value}' />
+      </td>";
+        }
+
+        html += $@"
+      <td>
+        <input type='submit' name='update' value='update' />
+      </td>
+    </form>
+  </tr>";
+      }
+
+      html += @"
+</table>";
+
+      // Return the generated HTML table with form elements
+      return html;
     }
   }
 
@@ -237,6 +321,19 @@ namespace SQL
     }
 
     /// <summary>
+    /// Generates a SELECT query to retrieve the URL of an image from a specified URL.
+    /// </summary>
+    /// <param name="url">The URL of the image.</param>
+    /// <returns>The SELECT query to retrieve the image URL as a string.</returns>
+    public static string Image(string url)
+    {
+      // Generate the SELECT query string to retrieve the image URL
+      string query = $"SELECT BulkColumn FROM Openrowset(Bulk '{url}', Single_Blob) AS image";
+
+      return query;
+    }
+
+    /// <summary>
     /// Formats a value based on its type to be used in SQL queries.
     /// </summary>
     /// <param name="value">The value to format.</param>
@@ -259,260 +356,6 @@ namespace SQL
       {
         return value as string;
       }
-    }
-  }
-
-  /// <summary>
-  /// Represents a class for interacting with a SQL Server SQL.Manager.
-  /// </summary>
-  internal class Manager
-  {
-    /// <summary>
-    /// The default connection string for the SQL.Manager.
-    /// </summary>
-    private const string defaultConnStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\sayav\source\repos\Webstop\App_Data\Database.mdf;Integrated Security=True";
-
-    /// <summary>
-    /// Gets a new instance of SqlConnection using the provided or default connection string.
-    /// </summary>
-    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
-    /// <returns>A new SqlConnection instance.</returns>
-    public static SqlConnection GetConnection(string connStr = defaultConnStr) => new SqlConnection(connStr);
-
-    /// <summary>
-    /// Executes a query SQL statement on the SQL.Manager using the provided or default connection string.
-    /// </summary>
-    /// <param name="sql">The SQL statement to execute.</param>
-    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
-    /// <returns>The number of rows affected by the SQL statement.</returns>
-    public static int DoQuery(string sql, string connStr = defaultConnStr)
-    {
-      // Establish a SQL connection using the provided connection string
-      SqlConnection conn = GetConnection(connStr);
-
-      // Open the SQL connection
-      conn.Open();
-
-      // Create a SqlCommand object with the provided SQL statement and connection
-      SqlCommand com = new SqlCommand(sql, conn);
-
-      // Execute the SQL statement and get the number of rows affected
-      int rowsAffected = com.ExecuteNonQuery();
-
-      // Dispose the SqlCommand object and close the connection
-      com.Dispose();
-      conn.Close();
-
-      // Return the number of rows affected
-      return rowsAffected;
-    }
-
-    /// <summary>
-    /// Executes a SQL query on the SQL.Manager and returns the result as a two-dimensional object array.
-    /// </summary>
-    /// <param name="sql">The SQL query to execute.</param>
-    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
-    /// <returns>A two-dimensional object array containing the result of the SQL query.</returns>
-    public static object[][] ExecuteQuery(string sql, string connStr = defaultConnStr)
-    {
-      // Execute the SQL query and retrieve the result as a DataTable
-      DataTable dt = ExecuteDataTable(sql, connStr);
-
-      // Initialize a object array of object arrays to store the result
-      object[][] table = new object[dt.Rows.Count][];
-
-      // Copy the DataRow collection into table
-      dt.Rows.CopyTo(table, 0);
-
-      // Return the object array containing the result of the SQL query
-      return table;
-    }
-
-    /// <summary>
-    /// Checks if a record exists in the SQL.Manager based on the provided SQL query.
-    /// </summary>
-    /// <param name="sql">The SQL query to check for existence.</param>
-    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
-    /// <returns>True if the record exists, False otherwise.</returns>
-    public static bool DoesExist(string sql, string connStr = defaultConnStr)
-    {
-      // Establish a SQL connection using the provided connection string
-      SqlConnection conn = GetConnection(connStr);
-
-      // Open the SQL connection
-      conn.Open();
-
-      // Create a SQL command object and execute the query
-      SqlCommand com = new SqlCommand(sql, conn);
-      SqlDataReader reader = com.ExecuteReader();
-
-      // Check if a record exists by attempting to read from the result set
-      bool recordExists = reader.Read();
-
-      // Close the connection to release resources
-      conn.Close();
-
-      // Return the result indicating whether a record exists or not
-      return recordExists;
-    }
-
-    /// <summary>
-    /// Executes a SQL statement and returns the result as a DataTable object.
-    /// </summary>
-    /// <param name="sql">The SQL statement to execute.</param>
-    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
-    /// <returns>A DataTable object containing the result of the SQL statement.</returns>
-    public static DataTable ExecuteDataTable(string sql, string connStr = defaultConnStr)
-    {
-      // Establish a SQL connection using the provided connection string
-      SqlConnection conn = GetConnection(connStr);
-
-      // Open the SQL connection
-      conn.Open();
-
-      // Create a SqlDataAdapter object with the provided SQL statement and connection
-      SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-
-      // Create a DataTable object to hold the result of the SQL query
-      DataTable dt = new DataTable();
-
-      // Fill the DataTable with the result of the SQL query
-      da.Fill(dt);
-
-      // Dispose the SqlDataAdapter object and close the connection
-      da.Dispose();
-      conn.Close();
-
-      // Return the DataTable containing the result of the SQL query
-      return dt;
-    }
-
-    /// <summary>
-    /// Executes a non-query SQL statement and returns the number of rows affected.
-    /// </summary>
-    /// <param name="sql">The SQL statement to execute.</param>
-    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
-    /// <returns>The number of rows affected by the SQL statement.</returns>
-    public static int DoNonQuery(string sql, string connStr = defaultConnStr)
-    {
-      // Establish a SQL connection using the provided connection string
-      SqlConnection conn = GetConnection(connStr);
-
-      // Open the SQL connection
-      conn.Open();
-
-      // Create a new SqlCommand object with the provided SQL statement and connection
-      SqlCommand com = new SqlCommand(sql, conn);
-
-      // Execute the SQL statement and get the number of rows affected
-      int rowsAffected = com.ExecuteNonQuery();
-
-      // Close the SQL connection
-      conn.Close();
-
-      // Return the number of rows affected by the SQL statement
-      return rowsAffected;
-    }
-
-    /// <summary>
-    /// Generates an HTML table with form elements for displaying and manipulating data from the SQL.Manager.
-    /// </summary>
-    /// <param name="sql">The SQL query to retrieve data from the SQL.Manager.</param>
-    /// <param name="action">The action URL for the form.</param>
-    /// <param name="addons">Additional attributes for the form elements (optional).</param>
-    /// <param name="connStr">The connection string to use (optional). If not provided, the default connection string will be used.</param>
-    /// <returns>An HTML string representing the generated table with form elements.</returns>
-    public static string ExecuteTableForm(string sql, string action, string[] addons = null, string connStr = defaultConnStr)
-    {
-      // Execute the SQL query and retrieve the result set as a DataTable
-      DataTable dt = ExecuteDataTable(sql, connStr);
-
-      // If addons array is null, initialize it with empty strings for each column in the DataTable
-      addons = addons ?? new string[dt.Columns.Count];
-
-      // Adjust the length of the addons array to match the number of columns in the DataTable
-      Array.Resize(ref addons, dt.Columns.Count);
-
-      // Generate the HTML table with form elements
-      string html = $@"
-<table>
-  <tr>
-    <form>";
-
-      // Generate the search form inputs
-      foreach (DataColumn column in dt.Columns)
-      {
-        int index = column.Ordinal;
-        string name = column.ColumnName;
-
-        html += $@"
-      <td>
-        <input {addons[index].Replace("readonly", string.Empty).Replace("disabled", string.Empty)} placeholder='{name}' id='search-{index}' type='text' name='{name}' />
-      </td>";
-      }
-
-      html += $@"
-      <td>
-        <input type='button' name='search' value='search' onclick='search()' />
-      </td>
-    </form>
-  </tr>";
-
-      // Generate the table rows with form elements for each row in the DataTable
-      foreach (DataRow row in dt.Rows)
-      {
-        html += $@"
-  <tr>
-    <form method='post' action='{action}'>";
-
-        // Generate the form inputs for each column in the current row
-        foreach (DataColumn column in dt.Columns)
-        {
-          int index = column.Ordinal;
-          string name = column.ColumnName;
-
-          html += $@"
-      <td>
-        <input {addons[index]} placeholder='{name}' type='text' name='{name.ToLower()}' value='{row[index]}' />
-      </td>";
-        }
-
-        html += $@"
-      <td>
-        <input type='submit' name='apply' value='apply' />
-        <input type='submit' name='remove' value='remove' />
-      </td>
-    </form>
-  </tr>";
-      }
-
-      html += $@"
-  <tr>
-    <form method='post' action='{action}'>";
-
-      // Generate the form inputs for adding a new row
-      foreach (DataColumn column in dt.Columns)
-      {
-        int index = column.Ordinal;
-        string name = column.ColumnName;
-        string defaultValue = name.ToLower().Equals("id")
-          ? $"{(int)dt.Rows[dt.Rows.Count - 1][index] + 1}"
-          : string.Empty;
-
-        html += $@"
-      <td>
-        <input {addons[index]} placeholder='{name}' type='text' name='{name.ToLower()}' value='{defaultValue}' />
-      </td>";
-      }
-
-      // Returns the complited form
-      return html += $@"
-      <td>
-        <input type='submit' name='add' value='add' />
-      </td>
-    </form>
-  </tr>
-</table>";
     }
   }
 }

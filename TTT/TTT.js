@@ -70,3 +70,4 @@ class Board {
     }
 }
 _Board_itemArray = new WeakMap(), _Board_emptyButtons = new WeakMap();
+//# sourceMappingURL=TTT.js.map
