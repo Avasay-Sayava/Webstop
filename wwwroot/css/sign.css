@@ -1,32 +1,27 @@
-﻿h1 {
+﻿content h1 {
   font-weight: bold;
   margin: 0;
 }
-
-h2 {
+content h2 {
   text-align: center;
 }
-
-p {
+content p {
   font-size: 14px;
   font-weight: 100;
   line-height: 20px;
   letter-spacing: 0.5px;
   margin: 20px 0 30px;
 }
-
-span {
+content span {
   font-size: 12px;
 }
-
-a {
+content a {
   color: #333;
   font-size: 14px;
   text-decoration: none;
   margin: 15px 0;
 }
-
-.button, button {
+content .button, content button {
   margin: 10px;
   border-radius: 20px;
   border: 1px solid #2b5dff;
@@ -39,18 +34,17 @@ a {
   text-transform: uppercase;
   transition: transform 80ms ease-in;
 }
-.button:active, button:active {
+content .button:active, content button:active {
   transform: scale(0.95);
 }
-.button:focus, button:focus {
+content .button:focus, content button:focus {
   outline: none;
 }
-.button.ghost, button.ghost {
+content .button.ghost, content button.ghost {
   background-color: transparent;
   border-color: #FFFFFF;
 }
-
-form {
+content form {
   background-color: #FFFFFF;
   display: flex;
   align-items: center;
@@ -60,8 +54,7 @@ form {
   height: 100%;
   text-align: center;
 }
-
-input:not(.button) {
+content input:not(.button) {
   transition: 0.3s;
   background-color: #eee;
   border: none;
@@ -70,12 +63,11 @@ input:not(.button) {
   width: 100%;
   border-bottom: 2px solid rgba(0, 0, 0, 0);
 }
-input:not(.button):focus {
+content input:not(.button):focus {
   outline: none;
   border-bottom: 2px solid rgb(0, 200, 35);
 }
-
-.container {
+content .container {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -88,60 +80,60 @@ input:not(.button):focus {
   max-height: 90%;
   transform: translate(0, -10%);
 }
-.container.right-panel-active .sign-in-container {
+content .container.right-panel-active .sign-in-container {
   transform: translateX(100%);
 }
-.container.right-panel-active .sign-up-container {
+content .container.right-panel-active .sign-up-container {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
 }
-.container.right-panel-active .overlay-container {
+content .container.right-panel-active .overlay-container {
   transform: translateX(-100%);
 }
-.container.right-panel-active .overlay {
+content .container.right-panel-active .overlay {
   transform: translateX(50%);
 }
-.container.right-panel-active .overlay-left {
+content .container.right-panel-active .overlay-left {
   transform: translateX(0);
 }
-.container.right-panel-active .overlay-right {
+content .container.right-panel-active .overlay-right {
   transform: translateX(20%);
 }
 @media screen and (min-height: 1124px) and (min-width: 1124px) and (orientation: landscape) {
-  .container {
+  content .container {
     min-height: 700px;
     min-width: 1050px;
   }
 }
 @media screen and (max-height: 1124px) and (min-width: 1124px) and (orientation: landscape) {
-  .container {
+  content .container {
     min-height: 480px;
   }
 }
 @media screen and (max-height: 860px) and (min-width: 800px) and (orientation: landscape) {
-  .container {
+  content .container {
     transform: none;
   }
 }
 @media screen and (max-height: 512px) and (min-width: 512px) and (orientation: landscape) {
-  .container {
+  content .container {
     max-width: 90%;
     min-height: 90%;
   }
 }
 @media screen and (orientation: portrait) {
-  .container {
+  content .container {
     max-width: 90%;
     min-height: 90%;
     transform: none;
   }
-  .container .sign-in-container {
+  content .container .sign-in-container {
     transition: 0.4s ease-in;
     width: 100%;
     height: 70%;
   }
-  .container .sign-up-container {
+  content .container .sign-up-container {
     transition: 0.4s ease-in;
     transform: translateY(-70%);
     width: 100%;
@@ -149,16 +141,16 @@ input:not(.button):focus {
     opacity: 0;
     z-index: -1;
   }
-  .container .overlay-container {
+  content .container .overlay-container {
     transform: translate(-50%, 234%);
     width: 100%;
     height: 30%;
   }
-  .container .overlay {
+  content .container .overlay {
     transform: translate(100%, 0);
     width: 100%;
   }
-  .container .overlay-left {
+  content .container .overlay-left {
     transition: 0.3s ease-in;
     transform: translate(0, -90%);
     width: 100%;
@@ -166,7 +158,7 @@ input:not(.button):focus {
     opacity: 0;
     z-index: -1;
   }
-  .container .overlay-right {
+  content .container .overlay-right {
     transition: 0.6s ease-in-out;
     transform: translate(0, 110%);
     width: 100%;
@@ -174,7 +166,7 @@ input:not(.button):focus {
     opacity: 1;
     z-index: 5;
   }
-  .container.right-panel-active .sign-in-container {
+  content .container.right-panel-active .sign-in-container {
     transition: 0.4s ease-in;
     transform: translateY(70%);
     width: 100%;
@@ -182,7 +174,7 @@ input:not(.button):focus {
     opacity: 0;
     z-index: -1;
   }
-  .container.right-panel-active .sign-up-container {
+  content .container.right-panel-active .sign-up-container {
     transition: 0.4s ease-in;
     transform: translateY(0);
     width: 100%;
@@ -190,16 +182,16 @@ input:not(.button):focus {
     opacity: 1;
     z-index: 5;
   }
-  .container.right-panel-active .overlay-container {
+  content .container.right-panel-active .overlay-container {
     transform: translate(-50%, 234%);
     width: 100%;
     height: 30%;
   }
-  .container.right-panel-active .overlay {
+  content .container.right-panel-active .overlay {
     transform: translate(100%, 0);
     width: 100%;
   }
-  .container.right-panel-active .overlay-left {
+  content .container.right-panel-active .overlay-left {
     transition: 0.6s ease-in-out;
     transform: translate(0, 110%);
     width: 100%;
@@ -207,7 +199,7 @@ input:not(.button):focus {
     opacity: 1;
     z-index: 5;
   }
-  .container.right-panel-active .overlay-right {
+  content .container.right-panel-active .overlay-right {
     transition: 0.3s ease-in;
     transform: translate(0, 310%);
     width: 100%;
@@ -216,28 +208,24 @@ input:not(.button):focus {
     z-index: -1;
   }
 }
-
-.form-container {
+content .form-container {
   position: absolute;
   top: 0;
   height: 100%;
   transition: all 0.6s ease-in-out;
 }
-
-.sign-in-container {
+content .sign-in-container {
   left: 0;
   width: 50%;
   z-index: 2;
 }
-
-.sign-up-container {
+content .sign-up-container {
   left: 0;
   width: 50%;
   opacity: 0;
   z-index: 1;
 }
-
-.overlay-container {
+content .overlay-container {
   position: absolute;
   top: 0;
   left: 50%;
@@ -247,8 +235,7 @@ input:not(.button):focus {
   transition: transform 0.6s ease-in-out;
   z-index: 100;
 }
-
-.overlay {
+content .overlay {
   background: linear-gradient(to right, #2b5dff, #2bb8ff);
   background-repeat: no-repeat;
   background-size: cover;
@@ -261,8 +248,7 @@ input:not(.button):focus {
   transform: translateX(0);
   transition: transform 0.6s ease-in-out;
 }
-
-.overlay-panel {
+content .overlay-panel {
   position: absolute;
   display: flex;
   align-items: center;
@@ -276,20 +262,17 @@ input:not(.button):focus {
   transform: translateX(0);
   transition: transform 0.6s ease-in-out;
 }
-
-.overlay-left {
+content .overlay-left {
   transform: translateX(-20%);
 }
-
-.overlay-right {
+content .overlay-right {
   right: 0;
   transform: translateX(0);
 }
-
-.social-container {
+content .social-container {
   margin: 20px 0;
 }
-.social-container a {
+content .social-container a {
   border: 1px solid #DDDDDD;
   border-radius: 50%;
   display: inline-flex;
@@ -299,8 +282,7 @@ input:not(.button):focus {
   height: 40px;
   width: 40px;
 }
-
-label {
+content label {
   visibility: hidden;
   position: absolute;
   color: red;
@@ -308,9 +290,8 @@ label {
   text-align: start;
   align-self: start;
 }
-
-#Content_exist,
-#Content_error {
+content #Content_exist,
+content #Content_error {
   color: red;
   font-size: 10px;
   text-align: start;

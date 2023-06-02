@@ -176,7 +176,21 @@ namespace SQL
       addons = addons ?? new string[dt.Columns.Count];
 
       // Adjust the length of the addons array to match the number of columns in the DataTable
-      Array.Resize(ref addons, dt.Columns.Count);
+      // Array.Resize(ref addons, dt.Columns.Count) wont work here
+      if (addons.Length != dt.Columns.Count)
+      {
+        // Create a new array with the desired size
+        string[] resizedAddons = new string[dt.Columns.Count];
+
+        // Copy the elements from the original addons array to the resizedAddons array
+        // We use Math.Min to ensure that we only copy up to the minimum length between the two arrays
+        // This prevents an IndexOutOfRangeException if addons.Length is greater than dt.Columns.Count
+        Array.Copy(addons, resizedAddons, Math.Min(addons.Length, dt.Columns.Count));
+
+        // Assign the resizedAddons array back to addons
+        // This resizes the addons array to the desired size and retains its existing values if possible
+        addons = resizedAddons;
+      }
 
       // Generate the HTML table with form elements
       string html = $@"
@@ -192,13 +206,36 @@ namespace SQL
 
         html += $@"
       <td>
-        <input {addons[index].Replace("readonly", string.Empty).Replace("disabled", string.Empty)} placeholder='{name}' id='search-{index}' type='text' name='{name}' />
+        <input {(addons[index] ?? "").Replace("readonly", "").Replace("disabled", "")} placeholder='{name}' id='search-{index}' type='text' name='{name}' />
       </td>";
       }
 
       html += $@"
       <td>
         <input type='button' name='search' value='search' onclick='search()' />
+      </td>
+    </form>
+  </tr>";
+
+      html += $@"
+  <tr>
+    <form method='post' action='{action}'>";
+
+      // Generate the form inputs for adding a new row
+      foreach (DataColumn column in dt.Columns)
+      {
+        int index = column.Ordinal;
+        string name = column.ColumnName;
+
+        html += $@"
+      <td>
+        <input {addons[index]} placeHolder='{name}' type='text' name='{name.ToLower()}' value='{(name.ToLower().Equals("id") ? $"{(int)dt.Rows[dt.Rows.Count - 1].ItemArray[index] + 1}" : "")}' />
+      </td>";
+      }
+
+      html += $@"
+      <td>
+        <input type='submit' name='add' value='add' />
       </td>
     </form>
   </tr>";
@@ -219,20 +256,18 @@ namespace SQL
 
           html += $@"
       <td>
-        <input {addons[index]} id='{index}' type='text' name='{name}' value='{value}' />
+        <input {addons[index] ?? ""} id='{index}' type='text' name='{name}' value='{value}' />
       </td>";
         }
 
         html += $@"
       <td>
-        <input type='submit' name='update' value='update' />
+        <input type='submit' name='apply' value='apply' />
+        <input type='submit' name='remove' value='remove' />
       </td>
     </form>
   </tr>";
       }
-
-      html += @"
-</table>";
 
       // Return the generated HTML table with form elements
       return html;
@@ -254,7 +289,7 @@ namespace SQL
     public static string Select(string tableName, string[] columns, string condition = null)
     {
       // Create the WHERE clause based on the condition
-      condition = condition == null ? string.Empty : $"WHERE {condition}";
+      condition = condition == null ? "" : $"WHERE {condition}";
 
       // Join the column names with a comma separator
       string columnNames = string.Join(", ", columns.Select((col, index) => $"[{col}]"));

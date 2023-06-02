@@ -11,6 +11,12 @@
   </asp:ContentPlaceHolder>
 </head>
 <body>
+  <dialog role="dialog">
+    <panel>Are you sure you want to sign out?</panel>
+    <form runat="server">
+      <asp:Button runat="server" id="signout" type="submit" value="Yes" OnClick="SignOut" />
+    </form>
+  </dialog>
   <ul>
     <%= AdminBtn %>
     <li><a></a></li>

@@ -10,13 +10,13 @@ namespace Webstop.Pages
     public string msg;
     protected void Page_Load(object sender, EventArgs e)
     {
-      code = Regex.IsMatch(Request.QueryString["code"] ?? string.Empty, @"^\d{3}$")
-        ? Request.QueryString["code"] ?? string.Empty
+      code = Regex.IsMatch(Request.QueryString["code"] ?? "", @"^\d{3}$")
+        ? Request.QueryString["code"] ?? ""
         : "400";
-      msg = Regex.IsMatch(Request.QueryString["msg"] ?? string.Empty, @"^[A-Za-z./ ']+\.$")
-        ? Request.QueryString["msg"] ?? string.Empty
-          .Replace("/Pages/", string.Empty)
-          .Replace(".aspx", string.Empty)
+      msg = Regex.IsMatch(Request.QueryString["msg"] ?? "", @"^[A-Za-z./ ']+\.$")
+        ? Request.QueryString["msg"] ?? ""
+          .Replace("/Pages/", "")
+          .Replace(".aspx", "")
           .Replace("file", "page")
         : $"Error code {code}";
     }

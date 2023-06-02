@@ -18,7 +18,13 @@ namespace Webstop.Masters
     /// </summary>
     public string AdminBtn { get; private set; }
 
-    /// <summary>
+    protected void SignOut(object sender, EventArgs e)
+    {
+      Session["Signin"] = 0;
+      Response.Redirect("/");
+    }
+
+    /// <summary> 
     /// This event handler is called when the master page is being loaded.
     /// </summary>
     /// <param name="sender">The object that raised the event.</param>
@@ -42,7 +48,7 @@ namespace Webstop.Masters
   {((Session["Signin"] as int? ?? 0) == 0
     ? @"<li><a href='Signin'>Sign In</a></li>
         <li><a href='Signup'>Sign Up</a></li>"
-    : @"<li><a href='Signout'>Sign Out</a></li>")}
+    : @"<li><a onclick='document.getElementsByTagName(""dialog"")[0].showModal()'>Sign Out</a></li>")}
 </ul>";
 
       SQL.Connection conn = new SQL.Connection();
