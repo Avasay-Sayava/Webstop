@@ -31,6 +31,10 @@ namespace Webstop.Masters
     /// <param name="e">An EventArgs object that contains the event data.</param>
     protected void Page_Load(object sender, EventArgs e)
     {
+      // Set the theme to the saved theme or to the default dark theme
+      Session["theme"] = Session["theme"] ?? "dark";
+      Session_theme.Text = Session["theme"] as string ?? "dark";
+
       // Check if the requested URL starts with "/Pages/"
       // If true, redirect to the error page with code 404
       if (Request.Url.AbsolutePath.StartsWith("/Pages/"))
@@ -66,6 +70,12 @@ namespace Webstop.Masters
           <a href='/Admin/Websites'><li>Websites</li></a>
           <a href='/Admin/Reviews'><li>Reviews</li></a>"
         : "";
+    }
+
+    protected void Session_theme_TextChanged(object sender, EventArgs e)
+    {
+      // Update the "theme" session
+      Session["theme"] = Session_theme.Text;
     }
   }
 }

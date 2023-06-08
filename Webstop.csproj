@@ -237,7 +237,6 @@
       <DependentUpon>colors.css</DependentUpon>
     </Content>
     <Content Include="favicon.ico" />
-    <Content Include="favicon.svg" />
     <Content Include="Global.asax" />
     <Content Include="Pages\Admin\Reviews.aspx" />
     <Content Include="Pages\Admin\Users.aspx" />

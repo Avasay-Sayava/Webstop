@@ -7,6 +7,7 @@
   static set(theme) {
     document.body.setAttribute("theme", theme);
     document.querySelector("dialog").setAttribute("theme", theme);
+    document.querySelector("input#Session_theme").value = theme;
   }
 
   /**
@@ -136,4 +137,4 @@ class Sign {
 }
 
 // Sets the theme to light
-Theme.set("light");
+Theme.set(document.querySelector("input#Session_theme").value);
