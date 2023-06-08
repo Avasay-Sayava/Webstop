@@ -257,7 +257,7 @@ namespace SQL
 
         html += $@"
       <td>
-        <input {addons[index]} placeHolder='{name}' type='text' name='{name.ToLower()}' value='{(name.ToLower().Equals("id") ? ExecuteNextIdentityValue("Users").ToString() : "")}' />
+        <input {addons[index] ?? ""} placeHolder='{name}' type='text' name='{name.ToLower()}' value='{(name.ToLower().Equals("id") ? ExecuteNextIdentityValue("Users").ToString() : "")}' />
       </td>";
       }
 
