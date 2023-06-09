@@ -64,4 +64,5 @@ content input[type=number] {
 }
 content input[type=button], content input[type=submit] {
   margin: 5px;
+  cursor: pointer;
 }

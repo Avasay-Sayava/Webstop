@@ -472,7 +472,7 @@ namespace SQL
       }
       else if (value is DateTime date)
       {
-        return $@"CAST('{date:dd/MM/yyyy HH:mm:ss.fff}' AS DATETIME)";
+        return $@"CAST('{date:MM/dd/yyyy HH:mm:ss}' AS DATETIME)";
       }
       else
       {

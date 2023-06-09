@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Default.Master" AutoEventWireup="true" CodeBehind="Sites.aspx.cs" Inherits="Webstop.Pages.Sites" %>
+﻿<%@ Page Title="Sites" Language="C#" MasterPageFile="~/Masters/Default.Master" AutoEventWireup="true" CodeBehind="Sites.aspx.cs" Inherits="Webstop.Pages.Sites" %>
 
 <asp:Content ContentPlaceHolderID="head" runat="server">
   <link href="/wwwroot/css/sites.css" rel="stylesheet" />

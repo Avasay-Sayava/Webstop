@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Web;
 
 namespace Webstop.Masters
@@ -23,6 +24,14 @@ namespace Webstop.Masters
       Session["Signin"] = 0;
       Response.Redirect("/");
     }
+    protected void Swap(object sender, EventArgs e)
+    {
+      string theme = Body.Attributes["theme"];
+      theme = theme.Equals("light") ? "dark" : "light";
+      Body.Attributes.Add("theme", theme);
+      Session["theme"] = theme;
+      Thread.Sleep(700);
+    }
 
     /// <summary> 
     /// This event handler is called when the master page is being loaded.
@@ -31,9 +40,8 @@ namespace Webstop.Masters
     /// <param name="e">An EventArgs object that contains the event data.</param>
     protected void Page_Load(object sender, EventArgs e)
     {
-      // Set the theme to the saved theme or to the default dark theme
-      Session["theme"] = Session["theme"] ?? "dark";
-      Session_theme.Text = Session["theme"] as string ?? "dark";
+      // Set the theme to the saved theme or to the default light theme
+      Body.Attributes.Add("theme", Session["theme"] as string ?? Body.Attributes["theme"] ?? "light");
 
       // Check if the requested URL starts with "/Pages/"
       // If true, redirect to the error page with code 404
@@ -70,12 +78,6 @@ namespace Webstop.Masters
           <a href='/Admin/Websites'><li>Websites</li></a>
           <a href='/Admin/Reviews'><li>Reviews</li></a>"
         : "";
-    }
-
-    protected void Session_theme_TextChanged(object sender, EventArgs e)
-    {
-      // Update the "theme" session
-      Session["theme"] = Session_theme.Text;
     }
   }
 }

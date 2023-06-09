@@ -35,7 +35,7 @@ namespace Webstop.Pages
         return res.Trim();
       })();
 
-      Page.Title = name + " - Webstop";
+      Page.Title = name;
 
       // Redirect to error page if address is invalid or website does not exist
       if (!Regex.IsMatch(clear, @"^(?:(?!www\.)[A-Za-z\d]{2,}\.)+[A-Za-z\d]{2,}$")

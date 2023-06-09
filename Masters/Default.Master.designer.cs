@@ -24,6 +24,15 @@ namespace Webstop.Masters
     protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
 
     /// <summary>
+    /// Body control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.HtmlControls.HtmlGenericControl Body;
+
+    /// <summary>
     /// Content control.
     /// </summary>
     /// <remarks>
@@ -42,12 +51,12 @@ namespace Webstop.Masters
     protected global::System.Web.UI.WebControls.Button signout;
 
     /// <summary>
-    /// Session_theme control.
+    /// Theme control.
     /// </summary>
     /// <remarks>
     /// Auto-generated field.
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
-    protected global::System.Web.UI.WebControls.TextBox Session_theme;
+    protected global::System.Web.UI.WebControls.Button Theme;
   }
 }

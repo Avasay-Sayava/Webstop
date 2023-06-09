@@ -11,7 +11,7 @@
   <asp:ContentPlaceHolder ID="head" runat="server">
   </asp:ContentPlaceHolder>
 </head>
-<body>
+<body id="Body" runat="server">
   <nav>
     <ul>
       <a class="logo" href="/Home">
@@ -33,10 +33,10 @@
       <p>Please confirm your decision to sign out from the website.</p>
       <asp:Button runat="server" ID="signout" OnClick="SignOut" Text="Yes, do it!" />
     </dialog>
-    <asp:TextBox runat="server" ID="Session_theme" OnTextChanged="Session_theme_TextChanged"></asp:TextBox>
+    <asp:Button runat="server" id="Theme" style="display:none; position: fixed;" OnClick="Swap" />
   </form>
 
-  <div id="theme" onclick="Theme.swap()">
+  <div id="theme" onclick="Theme.swap(); document.getElementById('<%= Theme.ClientID %>').click()">
     <div class="sun">
       <div class="ray"></div>
       <div class="ray"></div>
