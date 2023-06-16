@@ -75,6 +75,7 @@ content {
     }
 
     p {
+      max-width: calc(100% - 7vmin);
       color: var(--secondary);
     }
   }

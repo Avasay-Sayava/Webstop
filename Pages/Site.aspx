@@ -3,7 +3,8 @@
 <asp:Content ContentPlaceHolderID="head" runat="server">
   <link href="/wwwroot/css/site.css" rel="stylesheet" />
 </asp:Content>
-<asp:Content ContentPlaceHolderID="Content" runat="server">
+
+<asp:Content ContentPlaceHolderID="content" runat="server">
   <%= Content %>
   <dialog id="dialog">
     <i class="fa fa-times" onclick="document.getElementById('dialog').close()"></i>

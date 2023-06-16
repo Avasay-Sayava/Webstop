@@ -130,6 +130,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Masters\Admin.master.cs">
+      <DependentUpon>Admin.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Masters\Admin.master.designer.cs">
+      <DependentUpon>Admin.master</DependentUpon>
+    </Compile>
     <Compile Include="Masters\Default.Master.cs">
       <DependentUpon>Default.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -310,7 +317,6 @@
     <Content Include="wwwroot\css\sites.min.css">
       <DependentUpon>sites.css</DependentUpon>
     </Content>
-    <Content Include="wwwroot\js\Default.js" />
     <Content Include="wwwroot\js\Tools.js" />
   </ItemGroup>
   <ItemGroup>
@@ -323,6 +329,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Masters\Default.Master" />
+    <Content Include="Masters\Admin.master" />
     <None Include="packages.config" />
     <Content Include="wwwroot\css\sign.scss" />
     <Content Include="README.md" />
@@ -336,9 +343,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="wwwroot\js\Tools.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

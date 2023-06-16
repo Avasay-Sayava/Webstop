@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Threading;
 using System.Web;
+using System.Threading;
 
 namespace Webstop.Masters
 {
@@ -9,6 +9,8 @@ namespace Webstop.Masters
   /// </summary>
   public partial class Default : System.Web.UI.MasterPage
   {
+    readonly SQL.Connection conn = new SQL.Connection();
+
     /// <summary>
     /// Gets the HTML markup for the Sign button.
     /// </summary>
@@ -34,6 +36,55 @@ namespace Webstop.Masters
       Thread.Sleep(700);
     }
 
+    /// <summary>
+    /// Fix the identity value for [Id] column in [Users].
+    /// </summary>
+    /// <param name="sender">The object that raised the event.</param>
+    /// <param name="e">The event arguments.</param>
+    protected void FixIdentityValue(object sender, EventArgs e)
+    {
+      // Fix the identity value for [Id] column in [Users]
+      conn.DoQuery(@"
+SET IDENTITY_INSERT [Users] ON;
+
+DECLARE @TempTable TABLE (
+    [Id]       INT           NOT NULL,
+    [Name]     VARCHAR (30)  NOT NULL,
+    [Email]    VARCHAR (320) NOT NULL,
+    [Password] VARCHAR (16)  NOT NULL,
+    [Join]     DATETIME      NOT NULL,
+    [Last]     DATETIME      NOT NULL,
+    [Type]     TINYINT       DEFAULT ((1)) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+INSERT INTO @TempTable ([Id], [Name], [Email], [Password], [Join], [Last], [Type])
+SELECT [Id], [Name], [Email], [Password], [Join], [Last], [Type]
+FROM [Users];
+
+DROP TABLE [Users];
+
+CREATE TABLE [dbo].[Users] (
+    [Id]       INT           IDENTITY (0, 1) NOT NULL,
+    [Name]     VARCHAR (30)  NOT NULL,
+    [Email]    VARCHAR (320) NOT NULL,
+    [Password] VARCHAR (16)  NOT NULL,
+    [Join]     DATETIME      NOT NULL,
+    [Last]     DATETIME      NOT NULL,
+    [Type]     TINYINT       DEFAULT ((1)) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+SET IDENTITY_INSERT [Users] ON;
+
+INSERT INTO [Users] ([Id], [Name], [Email], [Password], [Join], [Last], [Type])
+SELECT [Id], [Name], [Email], [Password], [Join], [Last], [Type]
+FROM @TempTable;
+
+SET IDENTITY_INSERT [Users] OFF;");
+      Response.Redirect(Request.Url.AbsolutePath);
+    }
+
     /// <summary> 
     /// This event handler is called when the master page is being loaded.
     /// </summary>
@@ -51,8 +102,8 @@ namespace Webstop.Masters
         HttpContext.Current.Response.Redirect("/Error?code=404");
       }
 
-      // Append " - Webstop" to the page title
-      Page.Title += " - Webstop";
+      // Append " - Webstop" to the page title if it's not the Error page
+      if (!Page.Title.StartsWith("Error")) Page.Title += " - Webstop";
 
       // Generate the Sign button HTML markup based on the Signin session variable
       // If Signin session variable is null or 0, display "Sign In / Sign Up" switch, otherwise display "Sign Out" button
@@ -67,7 +118,6 @@ namespace Webstop.Masters
   )}
 </ul>";
 
-      SQL.Connection conn = new SQL.Connection();
       // Generate the Admin button HTML markup based on the user's type
       // If the user's type is 255, display the Admin buttons, otherwise hide the button
       string tableName = "Users";

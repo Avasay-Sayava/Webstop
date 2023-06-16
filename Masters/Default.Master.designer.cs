@@ -33,13 +33,13 @@ namespace Webstop.Masters
     protected global::System.Web.UI.HtmlControls.HtmlGenericControl Body;
 
     /// <summary>
-    /// Content control.
+    /// content control.
     /// </summary>
     /// <remarks>
     /// Auto-generated field.
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
-    protected global::System.Web.UI.WebControls.ContentPlaceHolder Content;
+    protected global::System.Web.UI.WebControls.ContentPlaceHolder content;
 
     /// <summary>
     /// signout control.
@@ -58,5 +58,14 @@ namespace Webstop.Masters
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.Button Theme;
+
+    /// <summary>
+    /// FIV control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Button FIV;
   }
 }

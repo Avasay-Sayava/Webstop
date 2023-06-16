@@ -16,30 +16,28 @@ function reloadTrBg() {
  * Performs a search on the table rows based on user input.
  */
 function search() {
-  const tables = Array.from(document.getElementsByTagName("table"));
+  const table = Array.from(document.getElementsByTagName("table"))[0];
 
-  tables.forEach(table => {
-    const trList = Array.from(table.getElementsByTagName("tr"));
+  const trList = Array.from(table.getElementsByTagName("tr"));
 
-    for (let i = 2; i < trList.length; i++) {
-      const inputs = Array.from(trList[i].getElementsByTagName("input"));
+  for (let i = 2; i < trList.length; i++) {
+    const inputs = Array.from(trList[i].getElementsByTagName("input"));
 
-      for (let j = 0; j < 5; j++) {
-        const input = document.getElementById(`search-${j}`);
-        const filter = input.value.toUpperCase();
-        const td = inputs[j];
+    for (let j = 0; j < 5; j++) {
+      const input = document.getElementById(`search-${j}`);
+      const filter = input.value.toUpperCase().trim();
+      const td = inputs[j];
 
-        if (td) {
-          const txtValue = td.value;
-          trList[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+      if (td != null) {
+        const txtValue = td.value;
+        trList[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
 
-          if (trList[i].style.display === "none") {
-            break;
-          }
+        if (trList[i].style.display === "none") {
+          break;
         }
       }
     }
-  });
+  }
 
   reloadTrBg();
 }

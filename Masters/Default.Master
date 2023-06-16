@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Default.master.cs" Inherits="Webstop.Masters.Default" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Default.Master.cs" Inherits="Webstop.Masters.Default" %>
 
 <!DOCTYPE html>
 
@@ -10,6 +10,7 @@
   <script defer="defer" src="/wwwroot/js/Tools.js"></script>
   <script defer="defer" src="/wwwroot/js/Default.js"></script>
   <asp:ContentPlaceHolder ID="head" runat="server">
+
   </asp:ContentPlaceHolder>
 </head>
 <body id="Body" runat="server">
@@ -24,10 +25,11 @@
       <%= SignBtn %>
     </ul>
   </nav>
-    <content>
-      <asp:ContentPlaceHolder ID="Content" runat="server">
-      </asp:ContentPlaceHolder>
-    </content>
+  <content>
+    <asp:ContentPlaceHolder ID="content" runat="server">
+
+    </asp:ContentPlaceHolder>
+  </content>
   <form runat="server">
     <dialog id="d_signout">
       <i class="fa fa-times" onclick="document.getElementById('d_signout').close()"></i>
@@ -35,6 +37,7 @@
       <asp:Button runat="server" ID="signout" OnClick="SignOut" Text="Yes, do it!" />
     </dialog>
     <asp:Button runat="server" id="Theme" style="display:none; position: fixed;" OnClick="Swap" />
+    <asp:Button runat="server" id="FIV"   style="display:none; position: fixed;" OnClick="FixIdentityValue" />
   </form>
 
   <div id="theme" onclick="Theme.swap(); document.getElementById('<%= Theme.ClientID %>').click()">

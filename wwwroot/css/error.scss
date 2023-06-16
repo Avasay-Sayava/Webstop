@@ -1,8 +1,12 @@
-﻿content {
+﻿@import '../../App_Themes/Dark/colors.css';
+@import '../../App_Themes/Light/colors.css';
+
+content {
   justify-content: flex-start;
 
   p {
     margin: 0;
+    color: var(--text);
 
     &:first-child {
       font-size: 30vmin;
@@ -10,6 +14,16 @@
 
     &:nth-child(2) {
       font-size: 7vmin;
+    }
+
+    &:nth-child(3) {
+      margin: 10px;
+      cursor: pointer;
+      font-size: 2vmin;
+
+      a {
+        color: var(--text);
+      }
     }
   }
 }

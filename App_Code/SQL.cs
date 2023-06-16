@@ -222,7 +222,6 @@ namespace SQL
 
       // Generate the HTML table with form elements
       string html = $@"
-<table>
   <tr>
     <form>";
 

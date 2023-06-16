@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Webstop.Pages
@@ -17,6 +18,11 @@ namespace Webstop.Pages
     public string msg;
 
     /// <summary>
+    /// Last page
+    /// </summary>
+    public string last;
+
+    /// <summary>
     /// Event handler for the Page_Load event.
     /// </summary>
     protected void Page_Load(object sender, EventArgs e)
@@ -26,6 +32,12 @@ namespace Webstop.Pages
 
       // Get the corresponding HTTP status message based on the code
       msg = HttpStatusMessage.Get(code);
+
+      // Update the last page
+      last = string.Join(" - ", Request.UrlReferrer.AbsolutePath.Substring(1).Split('/').Reverse());
+
+      // Set the title
+      Page.Title = $"Error {code} - {msg}";
     }
   }
 }

@@ -66,5 +66,6 @@ content section h2 {
   margin: 0;
 }
 content section p {
+  max-width: calc(100% - 7vmin);
   color: var(--secondary);
 }

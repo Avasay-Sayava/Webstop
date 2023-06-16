@@ -1,10 +1,6 @@
-﻿<%@ Page Title="Admin" Language="C#" MasterPageFile="~/Masters/Default.Master" AutoEventWireup="true" CodeBehind="Reviews.aspx.cs" Inherits="Webstop.Pages.Admin.Reviews" %>
-<asp:Content ContentPlaceHolderID="head" runat="server">
-  <!-- Include custom CSS for admin page -->
-  <link rel="stylesheet" href="/wwwroot/css/admin.css" />
-</asp:Content>
-<asp:Content ContentPlaceHolderID="Content" runat="server">
-  <p><%= Application["Visitors"] %> visitors so far.</p>
+﻿<%@ Page Title="Reviews" Language="C#" MasterPageFile="~/Masters/Admin.master" AutoEventWireup="true" CodeBehind="Reviews.aspx.cs" Inherits="Webstop.Pages.Admin.Reviews" %>
+
+<asp:Content ContentPlaceHolderID="content" runat="server">
   <div id="container">
     <div class="sticky">
       <div>Id</div>
@@ -15,8 +11,8 @@
       <div>Actions</div>
       <div style="width:0"></div>
     </div>
-    <%= Table %>
+    <table>
+      <%= Table %>
+    </table>
   </div>
-  <!-- Include admin.js script -->
-  <script src="/Scripts/Admin.js"></script>
 </asp:Content>

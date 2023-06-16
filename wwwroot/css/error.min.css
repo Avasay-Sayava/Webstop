@@ -1,1 +1,1 @@
-﻿content{justify-content:flex-start;}content p{margin:0;}content p:first-child{font-size:30vmin;}content p:nth-child(2){font-size:7vmin;}
+﻿@import'../../App_Themes/Dark/colors.css';@import'../../App_Themes/Light/colors.css';content{justify-content:flex-start;}content p{margin:0;color:var(--text);}content p:first-child{font-size:30vmin;}content p:nth-child(2){font-size:7vmin;}content p:nth-child(3){margin:10px;cursor:pointer;font-size:2vmin;}content p:nth-child(3) a{color:var(--text);}

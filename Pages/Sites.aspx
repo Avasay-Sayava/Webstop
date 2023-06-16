@@ -3,7 +3,8 @@
 <asp:Content ContentPlaceHolderID="head" runat="server">
   <link href="/wwwroot/css/sites.css" rel="stylesheet" />
 </asp:Content>
-<asp:Content ContentPlaceHolderID="Content" runat="server">
+
+<asp:Content ContentPlaceHolderID="content" runat="server">
   <input type="search" id="search" name="search" placeholder="Search a url" />
   <p>Website not found? <a onclick="document.getElementById('dialog').showModal()">Add it!</a></p>
   <%= Results %>

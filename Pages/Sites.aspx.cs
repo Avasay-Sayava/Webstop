@@ -8,12 +8,12 @@ namespace Webstop.Pages
   /// </summary>
   public partial class Sites : System.Web.UI.Page
   {
+    readonly SQL.Connection conn = new SQL.Connection();
+
     /// <summary>
     /// The results of websites displayed on the sites page.
     /// </summary>
     public string Results { get; private set; }
-
-    readonly SQL.Connection conn = new SQL.Connection();
 
     /// <summary>
     /// Event handler for the Page_Load event.

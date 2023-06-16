@@ -4,13 +4,13 @@ namespace Webstop.Pages
 {
   public partial class Signup : System.Web.UI.Page
   {
+    readonly SQL.Connection conn = new SQL.Connection();
+
     /// <summary>
     /// Event handler for the page load event.
     /// </summary>
     protected void Page_Load(object sender, EventArgs e)
     {
-      SQL.Connection conn = new SQL.Connection();
-
       // Hide error and exist elements on page load
       error.Visible = false;
       exist.Visible = false;

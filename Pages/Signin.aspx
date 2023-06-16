@@ -4,7 +4,8 @@
   <!-- Include custom CSS for sign-up page -->
   <link rel="stylesheet" href="wwwroot/css/sign.min.css" />
 </asp:Content>
-<asp:Content ContentPlaceHolderID="Content" runat="server">
+
+<asp:Content ContentPlaceHolderID="content" runat="server">
   <div class="container" id="container">
     <div class="form-container sign-up-container">
       <!-- Sign-up form -->

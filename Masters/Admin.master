@@ -1,0 +1,13 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Masters/Default.Master" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="Webstop.Masters.Admin" %>
+<asp:Content ContentPlaceHolderID="head" runat="server">
+  <!-- Include custom CSS for admin page -->
+  <link rel="stylesheet" href="/wwwroot/css/admin.css" />
+</asp:Content>
+<asp:Content ContentPlaceHolderID="content" runat="server">
+  <p><%= Application["Visitors"] %> visitors so far.</p>
+  <asp:ContentPlaceHolder ID="content" runat="server">
+
+  </asp:ContentPlaceHolder>
+  <!-- Include admin.js script -->
+  <script src="/Scripts/Admin.js"></script>
+</asp:Content>

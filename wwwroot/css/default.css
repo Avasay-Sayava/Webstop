@@ -208,8 +208,3 @@ body .ray {
   border-right-width: 1.1vmin;
   border-left-width: 1.1vmin;
 }
-
-#Session_theme {
-  visibility: hidden;
-  position: fixed;
-}
