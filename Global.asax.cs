@@ -1,21 +1,12 @@
 ﻿using System;
 using System.Web;
 using System.Web.Routing;
+using System.Web.SessionState;
 
 namespace Webstop
 {
   public class MvcApplication : HttpApplication
   {
-    /// <summary>
-    /// Handles the event raised when an unhandled exception occurs on a page.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
-    protected void Page_Error(object sender, EventArgs e)
-    {
-      // Implemented in Web.config
-    }
-
     /// <summary>
     /// Handles the application start event.
     /// </summary>
@@ -46,6 +37,16 @@ namespace Webstop
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
     protected void Application_Error(object sender, EventArgs e)
+    {
+      // Implemented in Web.config
+    }
+
+    /// <summary>
+    /// Handles the event raised when an unhandled exception occurs on a page.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
+    protected void Page_Error(object sender, EventArgs e)
     {
       // Implemented in Web.config
     }

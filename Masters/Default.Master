@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="~/wwwroot/css/default.css" rel="stylesheet" />
   <script defer="defer" src="/wwwroot/js/Tools.js"></script>
+  <script defer="defer" src="/wwwroot/js/Default.js"></script>
   <asp:ContentPlaceHolder ID="head" runat="server">
   </asp:ContentPlaceHolder>
 </head>

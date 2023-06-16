@@ -24,6 +24,7 @@ namespace Webstop.Masters
       Session["Signin"] = 0;
       Response.Redirect("/");
     }
+
     protected void Swap(object sender, EventArgs e)
     {
       string theme = Body.Attributes["theme"];

@@ -310,6 +310,7 @@
     <Content Include="wwwroot\css\sites.min.css">
       <DependentUpon>sites.css</DependentUpon>
     </Content>
+    <Content Include="wwwroot\js\Default.js" />
     <Content Include="wwwroot\js\Tools.js" />
   </ItemGroup>
   <ItemGroup>
