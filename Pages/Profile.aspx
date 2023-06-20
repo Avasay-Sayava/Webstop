@@ -2,7 +2,7 @@
 
 
 <asp:Content ContentPlaceHolderID="head" runat="server">
-  <link href="/wwwroot/css/profile.css" rel="stylesheet" />
+  <link href="/wwwroot/css/profile.min.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="content" runat="server">

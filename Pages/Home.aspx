@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Masters/Default.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Webstop.Pages.Home" %>
 
 <asp:Content ContentPlaceHolderID="head" runat="server">
-  <link href="/wwwroot/css/home.css" rel="stylesheet" />
+  <link href="/wwwroot/css/home.min.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="content" runat="server">
